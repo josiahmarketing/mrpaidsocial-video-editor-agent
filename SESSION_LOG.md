@@ -608,3 +608,5 @@ beats (ECG flatline, cost/tap charts, counters, toggle, look-alike ads stacking 
 each entering with a different move, plus quiet foley and a new lo-fi bed, at 1.1×. QA caught 3–4 frame
 empty gaps between beats where one fade-out finished before the next fade-in: beats now overlap.
 Added gotcha #32 to branded-ad-edit (line draws snap when pathLength is 1).
+- Revision: the reviewer found the transitions glitchy and late (crossfaded scenes ghosting). Rebuilt them as same-frame
+  swaps with motion, plus brand-blue wipes, and added 7 Higgsfield 3D icons. Gotcha #33 added.
