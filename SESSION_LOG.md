@@ -590,3 +590,13 @@ off-frame. The flat-frame scan missed it because camera footage sat behind the s
 entering under a covering slab wipe with a hard opacity set. Added gotcha #31 to
 branded-ad-edit (verify each takeover by comparing MP4 frames with `snapshot` frames at the
 same times). Skills touched: branded-ad-edit/references/gotchas.md.
+
+## 2026-11-07 — v2 of the same explainer: new look, quieter sound, 1.1×
+
+The reviewer found v1's sound effects too loud and interrupting, and its music felt like a commercial. v2 was rebuilt in a
+different look: the camera moves as one container between full frame, a tilted card with notes on
+a paper page, and a corner bubble when the page takes over. Graphics are marker highlights and hand-drawn
+lines. v2 has 19 soft foley hits at ~20 dB under the voice instead of ~50 punchy ones, and a mellow bed. The talk
+was sped to 1.1× from the source (setpts/atempo, word times ÷1.1, spot-checked with Whisper). All
+30 checked beats matched preview snapshots in the MP4. Skills touched: branded-ad-edit gotcha #31
+(container-transform layouts render reliably).
