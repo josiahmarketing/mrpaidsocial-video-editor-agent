@@ -600,3 +600,11 @@ lines. v2 has 19 soft foley hits at ~20 dB under the voice instead of ~50 punchy
 was sped to 1.1× from the source (setpts/atempo, word times ÷1.1, spot-checked with Whisper). All
 30 checked beats matched preview snapshots in the MP4. Skills touched: branded-ad-edit gotcha #31
 (container-transform layouts render reliably).
+
+## 2026-11-07 — voiceover-only explainer, dark dashboard look
+
+The source arrived with a black picture track, so this became a voiceover over graphics. The edit uses 16 dashboard
+beats (ECG flatline, cost/tap charts, counters, toggle, look-alike ads stacking into one, comment CTA),
+each entering with a different move, plus quiet foley and a new lo-fi bed, at 1.1×. QA caught 3–4 frame
+empty gaps between beats where one fade-out finished before the next fade-in: beats now overlap.
+Added gotcha #32 to branded-ad-edit (line draws snap when pathLength is 1).
