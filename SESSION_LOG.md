@@ -580,3 +580,13 @@ five skill validations. Rechecked whitespace and public-repository hygiene befor
 committing. Media, credentials, local review storage and personal configuration
 remain ignored. No architecture or implementation changes were needed for this
 publication step.
+
+## 2026-11-07 — talking-head explainer with two brand-blue takeovers
+
+Edited a 60s talking head (3 choices when ads get expensive) with above-head sticker cards,
+a map takeover, a recap takeover with the chosen option circled, and a comment-card CTA.
+The first master silently dropped the map takeover: its wrapper entered with a y-push from
+off-frame. The flat-frame scan missed it because camera footage sat behind the scene. Fixed by
+entering under a covering slab wipe with a hard opacity set. Added gotcha #31 to
+branded-ad-edit (verify each takeover by comparing MP4 frames with `snapshot` frames at the
+same times). Skills touched: branded-ad-edit/references/gotchas.md.
