@@ -625,4 +625,4 @@ The voice-only upload (black picture) became pen-and-paper graphics at 1.1×. Th
 taped polaroids, sticky notes, red-pen strikes, drawn tally marks, line boil and on-twos motion. There are six different physical transitions:
 page turn, sticky slap, red scribble, torn paper, ruler wipe and polaroid toss. Captions are marker on paper strips with a highlighter sweep.
 The proof beat uses a real crop of the platform's own help article, with figures checked against the live page. The music bed is from Higgsfield (the ElevenLabs music model).
-Added gotchas #37 (duplicate `<video>` sources render black; use stills) and #38 (the SVG turbulence boil forces slow screenshot capture).
+Added gotchas #37 (duplicate `<video>` sources render black; use stills) and #38 (a slow render traced to the extra media elements, not the boil filter). QA flagged one splice; the step was a consonant 17ms before the cut. The splices got 12ms per-sample fades anyway (`aeval`).
