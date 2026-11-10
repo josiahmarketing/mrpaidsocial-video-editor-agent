@@ -618,3 +618,11 @@ light sweeps between sections, 3D icons (4 new), a 10-person buyer meter, three 
 flags paid jobs. A pinned visual headline steps aside during the panels. Light glass was unreadable over a bright
 window, so it was switched to a dark tint. A long-GOP intermediate produced macroblock smears at the jump-cut seeks:
 it is now all-intra (gotcha #36). The HyperFrames frame cache filled the disk mid-session (gotcha #35).
+
+## 2026-11-10 — voiceover over a hand-made "school notebook" look
+
+The voice-only upload (black picture) became pen-and-paper graphics at 1.1×. The look is a lined paper page, handwriting fonts, marker headline tape,
+taped polaroids, sticky notes, red-pen strikes, drawn tally marks, line boil and on-twos motion. There are six different physical transitions:
+page turn, sticky slap, red scribble, torn paper, ruler wipe and polaroid toss. Captions are marker on paper strips with a highlighter sweep.
+The proof beat uses a real crop of the platform's own help article, with figures checked against the live page. The music bed is from Higgsfield (the ElevenLabs music model).
+Added gotchas #37 (duplicate `<video>` sources render black; use stills) and #38 (the SVG turbulence boil forces slow screenshot capture).
