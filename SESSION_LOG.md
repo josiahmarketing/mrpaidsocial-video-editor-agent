@@ -610,3 +610,11 @@ empty gaps between beats where one fade-out finished before the next fade-in: be
 Added gotcha #32 to branded-ad-edit (line draws snap when pathLength is 1).
 - Revision: the reviewer found the transitions glitchy and late (crossfaded scenes ghosting). Rebuilt them as same-frame
   swaps with motion, plus brand-blue wipes, and added 7 Higgsfield 3D icons. Gotcha #33 added.
+
+## 2026-11-10 — talking head in a new "glass & depth" look
+
+The edit uses frosted dark-glass cards over the footage, a camera focus pull (blur + dim + push) for two explainer panels,
+light sweeps between sections, 3D icons (4 new), a 10-person buyer meter, three buyer cards, and a lead list that
+flags paid jobs. A pinned visual headline steps aside during the panels. Light glass was unreadable over a bright
+window, so it was switched to a dark tint. A long-GOP intermediate produced macroblock smears at the jump-cut seeks:
+it is now all-intra (gotcha #36). The HyperFrames frame cache filled the disk mid-session (gotcha #35).
