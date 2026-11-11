@@ -42,6 +42,7 @@ tools/video-qa/            # the QA ENGINE: a standalone node package (tsx/zod),
                            #   manifest/{schema,adapter-hyperframes}, transcribe, gemini, cache, env
   src/__tests__/           #   offline deterministic + real-media regressions; live ASR opt-in
 tools/editor/              # Python stdlib project state, stage resume and footage library
+tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
   editor.py               #   project init/status/resume/checkpoint/render/approve/note/import-review
                           #   catalog ingest/search/annotate/use
   project.py              #   hashed receipts, stale-state detection, locks, immutable render versions

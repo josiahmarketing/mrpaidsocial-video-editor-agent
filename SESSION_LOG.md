@@ -627,3 +627,33 @@ page turn, sticky slap, red scribble, torn paper, ruler wipe and polaroid toss. 
 The proof beat uses a real crop of the platform's own help article, with figures checked against the live page. The music bed is from Higgsfield (the ElevenLabs music model).
 Added gotchas #37 (duplicate `<video>` sources render black; use stills) and #38 (a slow render traced to the extra media elements, not the boil filter). QA flagged one splice; the step was a consonant 17ms before the cut. The splices got 12ms per-sample fades anyway (`aeval`).
 - v2: the reviewer supplied a photo for the "me, explaining" polaroids. Building it showed that the polaroid-toss transition had never rendered in v1 (it entered from off-frame; gotcha #31 was extended). It's now an on-frame drop that lands exactly on the CTA polaroid.
+
+## 2026-11-10/11 — call-funnel video set (VSL, confirmation page, five breakouts, client recap) + an organic short
+
+Took a folder of landscape takes (VSL chapters, confirmation video, recap intro, five breakouts) and edited each one:
+- Retakes and slates are cut out. Edges are snapped to measured silence, and long pauses are squeezed.
+- Each cut is re-transcribed and read against the script.
+- The background is blurred on every talking-head part with a new CPU matting tool (`tools/bgmatte`, MODNet ONNX).
+
+Built a landscape motion-graphics kit in HyperFrames:
+- One camera container moves between three layouts: full frame, a side panel, and a full-screen takeover with a face bubble.
+- Chapter cards use four different transitions.
+- Count-ups, a demo pipeline board, a price stack, a guarantee seal, an example table, FAQ cards.
+- Captions are 2–3 words with the spoken word on a pill.
+- Music is three Higgsfield beds (~74 credits). SFX are the existing soft kit.
+
+The client chapter and the client recap are built from the weekly-call recording:
+- The client's call tile is a framed card, with his words as a large karaoke quote.
+- Each clip gets a context label, plus blurred proof screenshots.
+- The interviewer's questions are cut out.
+
+The breakout screen recording showed a real client's CRM, so it was rebuilt as an animated demo board with made-up names (gotcha #44).
+
+Problems hit along the way:
+- A single trim-filtergraph on a long 60 fps HEVC take was OOM-killed. Cutting per segment plus a concat demuxer fixed it.
+- The disk filled up from all-intra intermediates and the frame cache. Intermediates are now deleted as each stage lands.
+- A container restart killed the queues. They were resumed from the files on disk.
+
+Gotchas #39–#44 added: phrase anchors, chaining same-kind layouts, the frame cache shared between renders, split numbers, word-time drift around retakes, and screen recordings exposing client data.
+
+Also edited an organic short: the speaker keyed over a blurred text-thread background (`bgswap.py`), with a DM "QUOTE" CTA.
