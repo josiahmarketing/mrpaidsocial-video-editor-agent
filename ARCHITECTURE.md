@@ -42,12 +42,13 @@ tools/video-qa/            # the QA ENGINE: a standalone node package (tsx/zod),
                            #   manifest/{schema,adapter-hyperframes}, transcribe, gemini, cache, env
   src/__tests__/           #   offline deterministic + real-media regressions; live ASR opt-in
 tools/editor/              # Python stdlib project state, stage resume and footage library
-tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
   editor.py               #   project init/status/resume/checkpoint/render/approve/note/import-review
                           #   catalog ingest/search/annotate/use
   project.py              #   hashed receipts, stale-state detection, locks, immutable render versions
   catalog.py              #   probe, thumbnails, sidecar/local transcription and content IDs
   tests/                  #   state, failure, cache, media and review-import regressions
+tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
+tools/uttercut/            # utterance-level base cut for script-read takes: split at pauses, keep clean reads, verify edges
 scripts/
   setup.sh                # idempotent local setup + optional relative skill symlinks
   check-setup.sh           # offline lane-aware doctor; never downloads through npx

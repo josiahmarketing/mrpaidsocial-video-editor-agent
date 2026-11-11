@@ -657,3 +657,25 @@ Problems hit along the way:
 Gotchas #39–#44 added: phrase anchors, chaining same-kind layouts, the frame cache shared between renders, split numbers, word-time drift around retakes, and screen recordings exposing client data.
 
 Also edited an organic short: the speaker keyed over a blurred text-thread background (`bgswap.py`), with a DM "QUOTE" CTA.
+
+## 2026-11-11 — Agency funnel round 2: utterance-level re-cut
+
+The reviewer's notes on round 1 were all about pacing:
+- There was a pause before every line.
+- Restarts and a spoken "cut" were left in.
+- Sentence endings were clipped.
+- The same SFX repeated.
+
+Every funnel video was rebuilt from utterance-level selections. The new tooling is in `tools/uttercut`:
+- `utter.py` splits each take at pauses and transcribes every utterance on its own.
+- `cut.py` butts the chosen reads together with their natural tails.
+- `tcheck.py` and `headchk.py` prove the first and last words survive.
+
+Other changes:
+- SFX now rotate by category in least-recently-used order.
+- A month-to-month card was added wherever the offer says "month to month".
+- Bad AI SFX were dropped from the pool.
+
+Edge checks caught fast, quiet words the transcriber dropped ("you get", "it was… okay") and a trailing "so…". Those edges were fixed with absolute source times.
+
+Gotchas #45–#48 added: utterance cutting, SFX rotation, negative-span inserts, and the 500 MiB delivery cap.

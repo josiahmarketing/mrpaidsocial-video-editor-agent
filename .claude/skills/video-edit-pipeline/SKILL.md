@@ -129,6 +129,13 @@ Invoke **branded-ad-edit** and run its phases in order:
    the clever blur-pad version. Always render a frame of BOTH and show both
    before committing the composition to one. Do not silently pick the fancy
    one.
+   **Base cut for script-read takes** (pauses before lines, restarts, a spoken
+   "cut" before a retake): build it with `tools/uttercut`, not word windows.
+   - Split each take into utterances and keep one clean read per line.
+   - Butt the pieces with no gap and let every sentence finish.
+   - Prove it with `tcheck.py` and `headchk.py` (see its README and gotcha #45).
+   Reviewers judge the whole edit by this pacing. "No pause before I talk,
+   seamless, bang bang bang" is the bar.
 2. **Transcribe** with whisper-cli (word timestamps). The transcript drives
    captions, card-per-line timing, and the storyboard beats.
 3. **Storyboard from the style guide.** Every spoken line maps to a beat:
