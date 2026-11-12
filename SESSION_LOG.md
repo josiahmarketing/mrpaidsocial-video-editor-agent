@@ -721,3 +721,14 @@ Gotchas #55–#57 added.
 ## 2026-11-12 — Clean talking-head short, revision 3
 
 The owner asked for the picture mirrored and the edit at 1.1×. `cut.py` gained `SPEED`; the camera footage was flipped in the cut (`hflip`), not in the final render, so captions and graphics stay readable. The composition was rebuilt from the re-transcribed sped-up cut, so graphics still animate at a native 30 fps.
+
+## 2026-11-12 — Clean talking-head short, revision 4
+
+The owner approved v3 and asked for a few more transitions plus a short, easy-to-read note that tools can show the ads a customer went through before converting, with everything checked.
+
+- Research first. Two tracking vendors' own pages say they follow a lead from first ad click to the sale and show every click; Google's Analytics help says its paths report captures the sequence of touchpoints. Meta's March 2026 post says many third-party platforms attribute to website link clicks only, so the note says "clicked" and carries a second line, "Many log clicks only, not views."
+- The note sits in the empty lower half of the customer-journey sheet for about 4.7 s, before the scoreboard rises. No product names on screen.
+- New transitions: slow push-in before the first sheet, the sheet now pushes the camera in, a zoom-through with blur on the pivot line, a slanted wipe band into the fix, a drop-in for step 2, soft zoom settles on two cuts, a sideways push between the two proof pages, and a zoom settle into the CTA.
+- One new sound (a paper swipe on the wipe) cut from an unused clip of this video's own set; nothing reused.
+
+Gotchas #58–#59 added.
