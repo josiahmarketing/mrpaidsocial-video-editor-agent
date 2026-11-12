@@ -732,3 +732,14 @@ The owner approved v3 and asked for a few more transitions plus a short, easy-to
 - One new sound (a paper swipe on the wipe) cut from an unused clip of this video's own set; nothing reused.
 
 Gotchas #58–#59 added.
+
+## 2026-11-12 — Clean talking-head short, revision 5
+
+Reviewer notes on v4: the graphics felt boring with no sound effects, and the pause-then-turn-back-on advice needed a "good to know" caveat about the learning phase.
+
+- Sound: 17 more one-use effects generated and audited (33 generated, about half silent), so every graphic event now has its own hit; 29 in total, none repeated. Hits were mixed about 8 dB higher than before.
+- Second note, worded from Meta's "Significant edits" help page: pausing an ad set for 7 days or longer makes it re-enter the learning phase once it is unpaused. The owner's own "about 50/50 it performs the same" is shown as his experience, not as a Meta figure.
+- To fit the note, steps 2-3 run in a camera-card layout: the camera shrinks into a rounded card and the step card and note stack above it.
+
+Gotchas #60-#62 added.
+
