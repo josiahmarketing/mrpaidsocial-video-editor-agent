@@ -717,3 +717,7 @@ Reviewer notes on v1: look-aways and pauses at sentence ends, music too loud, vo
 - Sound effects: 11 freshly generated sounds, each used once; the build throws on a repeat. Music bed lowered about 3.7 dB.
 
 Gotchas #55–#57 added.
+
+## 2026-11-12 — Clean talking-head short, revision 3
+
+The owner asked for the picture mirrored and the edit at 1.1×. `cut.py` gained `SPEED`; the camera footage was flipped in the cut (`hflip`), not in the final render, so captions and graphics stay readable. The composition was rebuilt from the re-transcribed sped-up cut, so graphics still animate at a native 30 fps.

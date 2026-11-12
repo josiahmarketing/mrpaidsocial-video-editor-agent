@@ -63,19 +63,21 @@ for item in P["keep"]:
     for s, e in parts: segs.append([round(math.floor(s * 30) / 30, 4), round(math.ceil(e * 30) / 30, 4)])   # floor starts, ceil ends: never shave a frame of speech
 for i in range(1, len(segs)):
     if segs[i - 1][0] < segs[i][0] < segs[i - 1][1]: segs[i][0] = segs[i - 1][1]
+SPEED = float(os.environ.get("SPEED", 1))   # e.g. 1.1: pictures are sampled 1.1x apart from the source, the voice is time-stretched (pitch kept)
 t = 0; edl = []
-for i, (s, e) in enumerate(segs): edl.append(dict(src_start=s, src_end=e, out_start=round(t, 4), out_end=round(t + e - s, 4), win=i)); t += e - s
+for i, (s, e) in enumerate(segs): od = round((e - s) * 30 / SPEED) / 30; edl.append(dict(src_start=s, src_end=e, out_start=round(t, 4), out_end=round(t + od, 4), win=i)); t += od
 os.makedirs(k, exist_ok=True)
-json.dump(dict(fps=30, src=src, segments=edl), open(f"{k}/edl.json", "w"), indent=1)
+json.dump(dict(fps=30, src=src, speed=SPEED, segments=edl), open(f"{k}/edl.json", "w"), indent=1)
 print(k, len(segs), "pieces", round(t, 2), "s", flush=True)
 if os.environ.get("DRY"): sys.exit()
 crop = P.get("vf", "scale=1920:1080:flags=lanczos")
 os.makedirs(f"{k}/segs", exist_ok=True); lst = []
 for i, (s, e) in enumerate(segs):
-    d = e - s; nf = round(d * 30); f = f"{k}/segs/{i:03d}.mov"; lst.append(f"file 'segs/{i:03d}.mov'")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-i", src] + (["-ss", f"{s:.4f}", "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0"] if AUDIO else []) + ["-frames:v", str(nf), "-t", f"{nf / 30:.4f}",
-                    "-vf", f"fps=30,{crop},setsar=1,format=yuv420p",
-                    "-af", f"aformat=sample_rates=48000:channel_layouts=stereo,afade=t=in:d=0.01,afade=t=out:st={max(0, nf / 30 - 0.012):.4f}:d=0.012",
+    d = e - s; nf = round(d * 30 / SPEED); f = f"{k}/segs/{i:03d}.mov"; lst.append(f"file 'segs/{i:03d}.mov'")
+    tempo = f"atempo={SPEED},apad,atrim=0:{nf / 30:.4f}," if SPEED != 1 else ""
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{d + 0.2:.4f}", "-i", src] + (["-ss", f"{s:.4f}", "-t", f"{d:.4f}", "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0"] if AUDIO else []) + ["-frames:v", str(nf), "-t", f"{nf / 30:.4f}", "-r", "30",
+                    "-vf", f"fps={30 / SPEED:.6f},{crop},setsar=1,format=yuv420p,setpts=N/(30*TB)",
+                    "-af", f"aformat=sample_rates=48000:channel_layouts=stereo,{tempo}afade=t=in:d=0.01,afade=t=out:st={max(0, nf / 30 - 0.012):.4f}:d=0.012",
                     "-c:v", "libx264", "-preset", "fast", "-crf", "10", "-g", "1", "-bf", "0", "-c:a", "pcm_s16le", f], check=True)
 open(f"{k}/list.txt", "w").write("\n".join(lst) + "\n")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", f"{k}/list.txt", "-c:v", "copy",
