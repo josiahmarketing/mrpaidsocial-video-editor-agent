@@ -11,13 +11,15 @@ import sys, os, json, re, subprocess, math
 import numpy as np
 k = sys.argv[1]; P = json.load(open(os.environ.get("PLAN", "plan.json")))[k]
 U = json.load(open(f"utt/{P['take']}.json")); src = U["src"]; utts = U["utts"]
-raw = subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-vn", "-ac", "1", "-ar", "16000", "-af", "highpass=f=80,afftdn=nf=-30", "-f", "f32le", "-"], capture_output=True).stdout
+AUDIO = os.environ.get("AUDIO")   # optional pre-cleaned voice track on the take's timeline (see voiceclean.py)
+raw = subprocess.run(["ffmpeg", "-v", "error", "-i", AUDIO or src, "-vn", "-ac", "1", "-ar", "16000"] + ([] if AUDIO else ["-af", "highpass=f=80,afftdn=nf=-30"]) + ["-f", "f32le", "-"], capture_output=True).stdout
 x = np.frombuffer(raw, np.float32); rms = 20 * np.log10(np.sqrt(np.convolve(x ** 2, np.ones(320) / 320, "same")[::160]) + 1e-9)
 lo = U["p90"] - 42
 _m = np.zeros(len(rms), bool)
 for _u in utts: _m[int(_u["s"] * 100):int(_u["e"] * 100)] = True
 noise = float(np.percentile(rms[~_m], 90)) if (~_m).sum() > 50 else -90.0   # room tone between utterances
-thr = max(U["p90"] - float(os.environ.get("EDGE_DB", 32)), noise + 8); LEAD = float(os.environ.get("LEAD", 0.07)); TAIL = float(os.environ.get("TAIL", 0.13)); MAXPAUSE = float(os.environ.get("MAXPAUSE", 0.32))
+speech = float(np.percentile(rms[_m], 90)) if _m.sum() > 50 else U["p90"] + 3   # voice level inside utterances
+thr = max(speech - float(os.environ.get("EDGE_DB", 35)), noise + 8); LEAD = float(os.environ.get("LEAD", 0.07)); TAIL = float(os.environ.get("TAIL", 0.13)); MAXPAUSE = float(os.environ.get("MAXPAUSE", 0.32))
 n = lambda t: re.sub(r"[^a-z0-9$%']", "", t.lower())
 def find(words, phrase, last):
     toks = [n(t) for t in phrase.split()]; hits = [i for i in range(len(words) - len(toks) + 1) if all(n(words[i + j]["w"]) == toks[j] for j in range(len(toks)))]
@@ -71,13 +73,13 @@ crop = P.get("vf", "scale=1920:1080:flags=lanczos")
 os.makedirs(f"{k}/segs", exist_ok=True); lst = []
 for i, (s, e) in enumerate(segs):
     d = e - s; nf = round(d * 30); f = f"{k}/segs/{i:03d}.mov"; lst.append(f"file 'segs/{i:03d}.mov'")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-i", src, "-frames:v", str(nf), "-t", f"{nf / 30:.4f}",
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-i", src] + (["-ss", f"{s:.4f}", "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0"] if AUDIO else []) + ["-frames:v", str(nf), "-t", f"{nf / 30:.4f}",
                     "-vf", f"fps=30,{crop},setsar=1,format=yuv420p",
                     "-af", f"aformat=sample_rates=48000:channel_layouts=stereo,afade=t=in:d=0.01,afade=t=out:st={max(0, nf / 30 - 0.012):.4f}:d=0.012",
                     "-c:v", "libx264", "-preset", "fast", "-crf", "10", "-g", "1", "-bf", "0", "-c:a", "pcm_s16le", f], check=True)
 open(f"{k}/list.txt", "w").write("\n".join(lst) + "\n")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", f"{k}/list.txt", "-c:v", "copy",
-                "-af", "highpass=f=80,afftdn=nf=-32,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120,loudnorm=I=-16:TP=-1.5:LRA=7,aresample=48000",
+                "-af", os.environ.get("AFINAL", "aresample=48000" if AUDIO else "highpass=f=80,afftdn=nf=-32,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120,loudnorm=I=-16:TP=-1.5:LRA=7,aresample=48000"),
                 "-c:a", "pcm_s16le", f"{k}/mezz.mov"], check=True)
 import shutil; shutil.rmtree(f"{k}/segs"); os.remove(f"{k}/list.txt")
 print("mezz ok", k, flush=True)

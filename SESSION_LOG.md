@@ -706,3 +706,14 @@ Script was fact-checked against Meta's help pages before filming, then the 152 s
 - The speaker said "will run out" where the checked script says "can"; flagged to the owner.
 
 Gotchas #53–#54 added.
+
+## 2026-11-12 — Clean talking-head short, revision 2
+
+Reviewer notes on v1: look-aways and pauses at sentence ends, music too loud, voice "janky", repeated sound effects.
+
+- Cuts retightened to about 0.13 s between sentences (lead 0.04 s, tail 0.06 s, inner pauses over 0.2 s shrunk).
+- New `voiceclean.py`: the voice is cleaned once over the whole take from the room tone between utterances. The old chain guessed the noise floor about 18 dB too high.
+- New `gaze.py`: per-frame gaze scores. Remaining glances sit at sentence starts; the long ones are hidden under full-screen scenes and an opening reveal.
+- Sound effects: 11 freshly generated sounds, each used once; the build throws on a repeat. Music bed lowered about 3.7 dB.
+
+Gotchas #55–#57 added.
