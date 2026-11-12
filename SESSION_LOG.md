@@ -679,3 +679,19 @@ Other changes:
 Edge checks caught fast, quiet words the transcriber dropped ("you get", "it was… okay") and a trailing "so…". Those edges were fixed with absolute source times.
 
 Gotchas #45–#48 added: utterance cutting, SFX rotation, negative-span inserts, and the 500 MiB delivery cap.
+
+## 2026-11-11 — Faceless motion-graphic short ("you doubled your budget")
+
+The script was filmed as a talking head, but the brief said "motion graphic type of video". The first build put the speaker in as a sticker cut-out; the owner rejected it because he wanted no face. The edit was rebuilt as voice-over plus full-screen graphics.
+
+What was built:
+- Utterance cut of the take with `tools/uttercut` (three spoken-"cut" restarts in the proof line removed).
+- New `tools/bgmatte/cutout.py`: speaker cut-out as two blend-mode videos, so HTML graphics can sit behind and in front of the speaker without alpha video. It works in the renderer, though this edit ended up not using it.
+- A colour-block scene system: field wipes, ink-outlined cards, generated 3D characters, bar chart, pie with a travelling pointer, typed checklist, count-up proof number, comment-card CTA.
+
+Problems hit:
+- The chat upload of the HDR clip arrived with a black picture and good audio.
+- Wipes left near-empty frames until outgoing scenes were held through the wipe.
+- The mix needed a compressor before the limiter to reach about -14.8 LUFS.
+
+Gotchas #49–#52 added.
