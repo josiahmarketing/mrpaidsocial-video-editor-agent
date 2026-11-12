@@ -5,7 +5,8 @@
 #   {"u", "from"}      -> start at the LAST occurrence of that word sequence inside the utterance (drops a restart)
 #   {"u", "to"}        -> end after the FIRST occurrence of that word sequence
 #   {"u", "start"/"end"} -> absolute source seconds, for edges the word timestamps get wrong (verify with headchk.py)
-# Each piece keeps a 40 ms lead and its natural tail (energy above p90-42 dB, max +0.35 s, plus 60 ms), so sentences finish.
+# Each piece is tightened to the voice (first/last frame above p90-EDGE_DB) with LEAD before and TAIL after, so sentences
+# finish but room tone between them is gone; inner pauses longer than MAXPAUSE are shrunk the same way (0 = keep them).
 import sys, os, json, re, subprocess, math
 import numpy as np
 k = sys.argv[1]; P = json.load(open(os.environ.get("PLAN", "plan.json")))[k]
@@ -13,6 +14,10 @@ U = json.load(open(f"utt/{P['take']}.json")); src = U["src"]; utts = U["utts"]
 raw = subprocess.run(["ffmpeg", "-v", "error", "-i", src, "-vn", "-ac", "1", "-ar", "16000", "-af", "highpass=f=80,afftdn=nf=-30", "-f", "f32le", "-"], capture_output=True).stdout
 x = np.frombuffer(raw, np.float32); rms = 20 * np.log10(np.sqrt(np.convolve(x ** 2, np.ones(320) / 320, "same")[::160]) + 1e-9)
 lo = U["p90"] - 42
+_m = np.zeros(len(rms), bool)
+for _u in utts: _m[int(_u["s"] * 100):int(_u["e"] * 100)] = True
+noise = float(np.percentile(rms[~_m], 90)) if (~_m).sum() > 50 else -90.0   # room tone between utterances
+thr = max(U["p90"] - float(os.environ.get("EDGE_DB", 32)), noise + 8); LEAD = float(os.environ.get("LEAD", 0.07)); TAIL = float(os.environ.get("TAIL", 0.13)); MAXPAUSE = float(os.environ.get("MAXPAUSE", 0.32))
 n = lambda t: re.sub(r"[^a-z0-9$%']", "", t.lower())
 def find(words, phrase, last):
     toks = [n(t) for t in phrase.split()]; hits = [i for i in range(len(words) - len(toks) + 1) if all(n(words[i + j]["w"]) == toks[j] for j in range(len(toks)))]
@@ -37,7 +42,23 @@ for item in P["keep"]:
         if "to" in item:
             i, L = find(W, item["to"], False); e = tail(W[i + L - 1]["e"])
             if i + L < len(W): e = min(e, W[i + L]["s"] - 0.03)   # never run into the next word
-    segs.append([round(math.floor(s * 30) / 30, 4), round(math.ceil(e * 30) / 30, 4)])   # floor starts, ceil ends: never shave a frame of speech
+    # tighten to the voice: room tone above the splitter's low threshold can pad an utterance by ~0.3 s each side.
+    # Keep LEAD before the first voiced frame and TAIL after the last, and shrink inner pauses longer than MAXPAUSE.
+    explicit_s = isinstance(item, dict) and ("from" in item or "start" in item); explicit_e = isinstance(item, dict) and ("to" in item or "end" in item)
+    a0, b0 = max(0, int(s * 100)), min(len(rms), int(e * 100)); v = np.where(rms[a0:b0] >= thr)[0]
+    if len(v):
+        if not explicit_s: s = max(s, (a0 + v[0]) / 100 - LEAD)
+        if not explicit_e: e = min(e, (a0 + v[-1]) / 100 + TAIL)
+    parts = [[s, e]]
+    if MAXPAUSE > 0 and len(v):
+        on = rms[int(s * 100):int(e * 100)] >= thr; st = None; base = int(s * 100); out = []; cur = s
+        for i, x in enumerate(list(on) + [True]):
+            if not x and st is None: st = i
+            if x and st is not None:
+                if (i - st) / 100 > MAXPAUSE and st > 0 and i < len(on): out.append([cur, (base + st) / 100 + TAIL]); cur = (base + i) / 100 - LEAD
+                st = None
+        out.append([cur, e]); parts = [p for p in out if p[1] - p[0] > 0.08]
+    for s, e in parts: segs.append([round(math.floor(s * 30) / 30, 4), round(math.ceil(e * 30) / 30, 4)])   # floor starts, ceil ends: never shave a frame of speech
 for i in range(1, len(segs)):
     if segs[i - 1][0] < segs[i][0] < segs[i - 1][1]: segs[i][0] = segs[i - 1][1]
 t = 0; edl = []

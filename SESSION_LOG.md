@@ -695,3 +695,14 @@ Problems hit:
 - The mix needed a compressor before the limiter to reach about -14.8 LUFS.
 
 Gotchas #49–#52 added.
+
+## 2026-11-12 — Clean talking-head short ("your best ad might be taking the credit")
+
+Script was fact-checked against Meta's help pages before filming, then the 152 s take was cut to 55.7 s.
+
+- Utterance cut dropped three spoken-"cut" restarts. The first cut still had about 0.7 s of room tone at every join, so `tools/uttercut/cut.py` now tightens each piece to the voice using the room tone measured between utterances.
+- New clean look: full-frame speaker, soft white cards above the head, one white caption bar with the spoken word on an ink pill, and two full-screen sheet scenes.
+- Proof beat uses real Meta Business Help Center screenshots with a highlight and a re-typeset pull-quote. The site was blocked locally, so the screenshots came through the scrape tool.
+- The speaker said "will run out" where the checked script says "can"; flagged to the owner.
+
+Gotchas #53–#54 added.

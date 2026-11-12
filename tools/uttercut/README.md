@@ -9,7 +9,7 @@ utterances first makes every restart its own visible line.
 | Script | What it does |
 |---|---|
 | `utter.py <take>...` | Split each take at pauses ≥ 0.30 s (RMS envelope, thresholds relative to the take's p90 level) and transcribe every utterance on its own (faster-whisper medium, word timestamps, a prompt that keeps "cut" / "um" in the text). Writes `utt/<take>.json`. |
-| `cut.py <part>` | Build `<part>/mezz.mov` from the utterances listed in `plan.json` (or `$PLAN`), butted together with no pauses. Pieces keep a 40 ms lead and their natural tail, so sentences finish. Starts are floored and ends ceiled to the frame grid. Writes `<part>/edl.json`. `DRY=1` writes only the EDL. |
+| `cut.py <part>` | Build `<part>/mezz.mov` from the utterances listed in `plan.json` (or `$PLAN`), butted together. Each piece is tightened to the voice: the threshold sits above the room tone measured between utterances, with `LEAD` (0.07 s) before the first voiced frame and `TAIL` (0.13 s) after the last, so sentences finish and joins land about 0.2 s apart. Inner pauses longer than `MAXPAUSE` (0.32 s, 0 = keep) are shrunk the same way. Starts are floored and ends ceiled to the frame grid. Writes `<part>/edl.json`. `DRY=1` writes only the EDL. |
 | `tcheck.py <part>...` | Compare what the cut should say (source words inside each EDL piece) with a fresh transcript of the cut (`<part>/words.json`). Lists missing or added words with their output times. |
 | `headchk.py <src> <t>...` | Transcribe 1.8 s from each start time. Use it to prove a piece's first word survives, or to find a clean edge by trying a few nearby times. |
 
@@ -35,7 +35,7 @@ utterances first makes every restart its own visible line.
 2. Read the utterance texts, then pick one clean reading of each script line:
    - Skip anything followed by a spoken "cut".
    - Skip a line that is read again later; take the later read.
-3. Run `DRY=1 cut.py`, then `cut.py`.
+3. Run `DRY=1 cut.py`, then `cut.py`. Scan the cut for silences over 0.2 s before going on: a loud room tone can pad every join.
 4. Transcribe the cut and run `tcheck.py`.
 5. Check every flagged head or tail with `headchk.py`. Transcribers drop or mishear fast,
    quiet words such as "you get", "it was… okay", or a trailing "so…".
