@@ -50,6 +50,7 @@ tools/editor/              # Python stdlib project state, stage resume and foota
 tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
 tools/uttercut/            # utterance-level base cut for script-read takes: split at pauses, keep clean reads, verify edges
 tools/remix/               # rebuild a composition's audio mix from its <audio> tags (audio-only revisions without a video re-render)
+tools/safezone/            # check that a composition's text and cards stay inside the platform safe box at every moment
 scripts/
   setup.sh                # idempotent local setup + optional relative skill symlinks
   check-setup.sh           # offline lane-aware doctor; never downloads through npx

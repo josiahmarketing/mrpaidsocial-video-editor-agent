@@ -743,3 +743,17 @@ Reviewer notes on v4: the graphics felt boring with no sound effects, and the pa
 - One sound sat about 7 dB above the other sustained effects in the finished file. New `tools/remix/remix.py` rebuilt the mix from the composition's audio tags (null-tested against the render at about -50 dB residual), so the level fix shipped without a second video render.
 
 Gotchas #60-#63 added.
+
+## 2026-11-14 — Clean talking-head short built to the platform safe zones ("one bad day is not a bad ad")
+
+The owner asked for everything inside the TikTok and Instagram 9:16 safe zones, clean captions, calm graphics, good transitions and quiet sound effects with nothing repeated, and (mid-edit) the print on his shirt blurred.
+
+- Safe box used: x 140-940, y 269-1248 on 1080x1920 (Meta's 14 % top / 35 % bottom / 6 % sides, plus the 140 px right rail, mirrored on the left to stay centred). The speaker was reframed higher from the 1440-wide source so the caption bar sits under the chin and above the 35 % line.
+- New `tools/safezone/check.mjs` seeks the timeline and measures every settled text element and card; the build passes with nothing outside the box.
+- The take was read in one breath: the voice cleaner and the cutter both mis-measured room tone and the first cut dropped two sentence endings. Both tools now handle takes without gaps.
+- Shirt print hidden behind a frosted panel in the base video (heavy blur by downscaling, rounded mask).
+- Eight transitions, each a different kind and used once; 22 sound effects, each a different sound used once, mixed about 21 dB under the voice peaks. The build throws if a transition or sound is assigned twice.
+- The speaker said "at least two leads a day … at least once a week"; the checked script says "about". On-screen figures use "about"; flagged to the owner.
+
+Gotchas #64-#67 added.
+

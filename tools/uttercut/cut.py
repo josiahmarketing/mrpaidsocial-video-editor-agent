@@ -17,7 +17,10 @@ x = np.frombuffer(raw, np.float32); rms = 20 * np.log10(np.sqrt(np.convolve(x **
 lo = U["p90"] - 42
 _m = np.zeros(len(rms), bool)
 for _u in utts: _m[int(_u["s"] * 100):int(_u["e"] * 100)] = True
-noise = float(np.percentile(rms[~_m], 90)) if (~_m).sum() > 50 else -90.0   # room tone between utterances
+# room tone between utterances. A take read in one breath has almost no gaps, and the few there are hold breaths and word
+# tails: measuring "noise" there puts the threshold above quiet sentence-final words and the cutter drops them as pauses.
+# With under 2 s of gaps, use the quietest 1 % of the whole take instead (in such a take even the 10th percentile is speech).
+noise = float(np.percentile(rms[~_m], 90)) if (~_m).sum() > 200 else float(np.percentile(rms, 1))
 speech = float(np.percentile(rms[_m], 90)) if _m.sum() > 50 else U["p90"] + 3   # voice level inside utterances
 thr = max(speech - float(os.environ.get("EDGE_DB", 35)), noise + 8); LEAD = float(os.environ.get("LEAD", 0.07)); TAIL = float(os.environ.get("TAIL", 0.13)); MAXPAUSE = float(os.environ.get("MAXPAUSE", 0.32))
 n = lambda t: re.sub(r"[^a-z0-9$%']", "", t.lower())
