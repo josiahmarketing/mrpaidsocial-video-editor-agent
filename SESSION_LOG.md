@@ -757,3 +757,13 @@ The owner asked for everything inside the TikTok and Instagram 9:16 safe zones, 
 
 Gotchas #64-#67 added.
 
+## 2026-11-14 — Safe-zone short, revision 2: blur only the shirt graphic
+
+The owner asked for the blur to cover only the printed box on his shirt instead of the whole lower frame (and asked for 1.1x, which the cut already was).
+
+- New `tools/printblur`: `track.py` follows the print by matching features to one clean reference frame; `blur.py` blurs the tracked area but keeps hands sharp. A first version smeared the middle of the hands: the print shows a person, so the skin segmenter and a colour comparison could not tell printed skin from real hands. The fix was to veto only solid regions whose structure matches the tracked reference print, and to keep skin blobs that reach outside the print.
+- About one frame in five could not be tracked directly (hands over most of the print); those are bridged inside the shot and use a wider, stricter structure search.
+- Checked on before/after sheets for every on-camera stretch.
+
+Gotcha #68 added.
+
