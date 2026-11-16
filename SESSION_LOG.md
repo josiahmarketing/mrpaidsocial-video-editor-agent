@@ -801,3 +801,5 @@ The owner sent one 3-minute recording of takes and asked for the mistakes cut ou
 - Disk ran short twice (a 1.5 GB source, then the renderer's 1 GB minimum). `cut.py` gained `MEZZ_CRF`; package-manager caches were purged with their own commands. An attempt to delete an older project's raw files was refused and was not retried.
 
 Skills touched: none changed in process. Gotchas #73-#76 added. Tools changed: `smoothcut` (`GRADE`), `uttercut/cut.py` (`MEZZ_CRF`).
+
+**Revision 2 (same day).** The owner approved the edit and asked for his own screenshot of the comment in place of the redrawn reply card. The screenshot is cropped to the comment, shown as a pinned card, and the two questions are marked with tint bars placed from word boxes measured in the image. Gotcha #77 added.
