@@ -11,16 +11,17 @@
 # default 0.853), EYE_X / EYE_Y preferred eye position (540 / 720; each segment gets as near as its framing allows),
 # HPAD / VPAD px of mirrored edge allowed at the sides / bottom to hold that position (0), MORPH (3),
 # CUTS="f1,f2" extra cut frames, QA=dir (a strip of frames around every cut + meta.json).
+# OUT="1920x1080" sets the output size (default 1080x1920); AW is the width the face is tracked at (540; use 960 for landscape).
 # GRADE="<ffmpeg filters>" applies a colour grade in the same encode (one generation, no extra pass over the picture).
 import sys, os, json, subprocess, collections, numpy as np, cv2, mediapipe as mp
 from mediapipe.tasks import python as mpp
 from mediapipe.tasks.python import vision
-src, out = sys.argv[1:3]; OW, OH, FPS = 1080, 1920, 30
+src, out = sys.argv[1:3]; FPS = 30; OW, OH = map(int, os.environ.get("OUT", "1080x1920").split("x"))   # OUT=1920x1080 for landscape
 W, H = map(int, subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0", src], capture_output=True, text=True).stdout.strip().split(","))
 S0 = float(os.environ.get("SCALE", 0.853)); EY = float(os.environ.get("EYE_Y", 720)); MORPH = int(os.environ.get("MORPH", 3)); QA = os.environ.get("QA")
 fl = vision.FaceLandmarker.create_from_options(vision.FaceLandmarkerOptions(base_options=mpp.BaseOptions(model_asset_path=os.environ["MODEL"]), num_faces=1))
 # ---------- pass 1: eyes per frame + frame differences
-aw, ah = 540, 540 * H // W
+aw = int(os.environ.get("AW", 540)); ah = aw * H // W   # analysis width: raise it (AW=960) when the face is small in a wide frame
 p = subprocess.Popen(["ffmpeg", "-v", "error", "-i", src, "-vf", f"scale={aw}:{ah}", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
 mid = []; dist = []; D = [0.0]; prev = None
 while True:
@@ -31,7 +32,7 @@ while True:
         L = r.face_landmarks[0]; re = np.array([(L[33].x + L[133].x) / 2 * W, (L[33].y + L[133].y) / 2 * H]); le = np.array([(L[362].x + L[263].x) / 2 * W, (L[362].y + L[263].y) / 2 * H])
         mid.append((re + le) / 2); dist.append(float(np.linalg.norm(le - re)))
     else: mid.append(np.array([np.nan, np.nan])); dist.append(np.nan)
-    g = cv2.resize(cv2.cvtColor(f, cv2.COLOR_RGB2GRAY), (180, 320)).astype(np.float32)
+    g = cv2.resize(cv2.cvtColor(f, cv2.COLOR_RGB2GRAY), (180, max(2, 180 * ah // aw))).astype(np.float32)
     if prev is not None: D.append(float(np.abs(g - prev).mean()))
     prev = g
 N = len(mid); mid = np.array(mid); dist = np.array(dist); D = np.array(D); idx = np.arange(N); okf = ~np.isnan(dist)
@@ -94,7 +95,7 @@ def emit(i, f):
     enc.stdin.write(f.tobytes())
     if QA:
         for c in cuts:
-            if c - 5 <= i <= c + 4: strips.setdefault(c, []).append(cv2.resize(f, (216, 384)))
+            if c - 5 <= i <= c + 4: strips.setdefault(c, []).append(cv2.resize(f, (216, 384) if OH > OW else (320, 180)))
 SOFT = float(os.environ.get("SOFT", 16)); ONES = np.full((H, W), 255, np.uint8)
 def soften(f, M):   # blur the mirrored band, feathered over 20 px from the real picture
     if SOFT <= 0: return f

@@ -1,5 +1,5 @@
 # Background blur for talking-head video: MODNet alpha (512px), temporal EMA, blurred plate composited under the sharp person.
-import sys, subprocess, numpy as np, cv2, onnxruntime as ort, time
+import sys, os, subprocess, numpy as np, cv2, onnxruntime as ort, time
 inp, out = sys.argv[1], sys.argv[2]
 ss, dur = (float(sys.argv[3]), float(sys.argv[4])) if len(sys.argv) > 4 else (None, None)
 W, H, FPS = 1920, 1080, 30
@@ -7,7 +7,7 @@ so = ort.SessionOptions(); so.intra_op_num_threads = 4
 import os; sess = ort.InferenceSession(os.environ.get("MODNET", os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "modnet.onnx")), so)
 dec = ["ffmpeg", "-v", "error"] + (["-ss", str(ss), "-t", str(dur)] if ss is not None else []) + ["-i", inp, "-vf", f"fps={FPS}", "-pix_fmt", "bgr24", "-f", "rawvideo", "-"]
 enc = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-       "-c:v", "libx264", "-preset", "medium", "-crf", "12", "-g", "1", "-bf", "0", "-pix_fmt", "yuv420p", out]
+       "-c:v", "libx264", "-preset", "medium", "-crf", os.environ.get("CRF", "12"), "-g", os.environ.get("GOP", "1"), "-bf", "0", "-pix_fmt", "yuv420p", out]   # CRF=15 GOP=30 for a base that is only rendered from
 p = subprocess.Popen(dec, stdout=subprocess.PIPE); q = subprocess.Popen(enc, stdin=subprocess.PIPE)
 prev = None; n = 0; t0 = time.time()
 mw, mh = int(__import__("os").environ.get("MW", 640)), int(__import__("os").environ.get("MH", 352))

@@ -803,3 +803,20 @@ The owner sent one 3-minute recording of takes and asked for the mistakes cut ou
 Skills touched: none changed in process. Gotchas #73-#76 added. Tools changed: `smoothcut` (`GRADE`), `uttercut/cut.py` (`MEZZ_CRF`).
 
 **Revision 2 (same day).** The owner approved the edit and asked for his own screenshot of the comment in place of the redrawn reply card. The screenshot is cropped to the comment, shown as a pinned card, and the two questions are marked with tint bars placed from word boxes measured in the image. Gotcha #77 added.
+
+## 2026-11-16 — Two landscape videos for a booked-call page (a six-chapter "check us out" video and a short "why start now")
+
+The owner filmed both from a script, reading line by line with retakes, and asked for the reads to be joined so the pauses do not show, the picture mirrored, 1.1x, the background blurred, motion graphics, transitions, quiet sound and music, and chapters in the first video.
+
+- Video 1: 88 utterances in the take, 55 kept, about 103 s. Video 2: 53 utterances, 35 kept, about 55 s. Two ad-libs that were not in the script were left out.
+- Two restarts were hidden inside single utterances (the transcriber had merged them). They were found from words with stretched timing, confirmed with a second model, and trimmed by source time before smoothing.
+- `smoothcut` now writes landscape (`OUT=1920x1080`, face tracked at `AW=960`); every join in the cut list is passed in. The background blur (`bgmatte`) runs after smoothing, so the filled edge the face-lock leaves is hidden by the blur.
+- Chapters: each opens with a title card that starts just before he names the chapter, and the layout switches instantly while the card covers the frame. A chapter chip with six pips stays up afterwards. The six chapter times are listed in the delivery so they can be entered in the player.
+- Text was resized after the first snapshots: the page is mostly opened on phones, where a 1920-wide frame is about a fifth of its size. Captions went to 58 px and card text up to match; cards that revealed a second half later were split in two so none sits half empty.
+- His note for the second video asked for the quoted excuses to play in grey with a high voice: the picture goes greyscale for those two lines and the voice is pitched up with formants shifted, then both return on "here's why".
+- He sent two photos mid-task and asked for them wherever he mentions himself or his partner. They are used as photo cards when he introduces the two of them, as small avatars on the "small team" card, and on the sign-off.
+- On-screen terms follow the script he filmed from where his spoken wording drifted (for example "Facebook pages" on the card where he said "Facebook account"); flagged in the delivery.
+- 25 one-use sounds in the first video and 13 in the second, none shared; music about 23 dB under the voice.
+
+Skills touched: none changed in process. Gotchas #78-#81 added. Tools changed: `smoothcut` (`OUT`, `AW`, landscape QA strips), `bgmatte/blurbg.py` (`CRF`, `GOP`).
+
