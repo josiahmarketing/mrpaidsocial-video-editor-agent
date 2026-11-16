@@ -11,6 +11,7 @@
 # default 0.853), EYE_X / EYE_Y preferred eye position (540 / 720; each segment gets as near as its framing allows),
 # HPAD / VPAD px of mirrored edge allowed at the sides / bottom to hold that position (0), MORPH (3),
 # CUTS="f1,f2" extra cut frames, QA=dir (a strip of frames around every cut + meta.json).
+# GRADE="<ffmpeg filters>" applies a colour grade in the same encode (one generation, no extra pass over the picture).
 import sys, os, json, subprocess, collections, numpy as np, cv2, mediapipe as mp
 from mediapipe.tasks import python as mpp
 from mediapipe.tasks.python import vision
@@ -86,7 +87,7 @@ def morph(A, B, n):
         res.append((At * (1 - w) + Bt * w).clip(0, 255).astype(np.uint8))
     return res
 dec = subprocess.Popen(["ffmpeg", "-v", "error", "-i", src, "-vf", "scale=in_color_matrix=bt709:in_range=tv,format=bgr24", "-f", "rawvideo", "-"], stdout=subprocess.PIPE)
-enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{OW}x{OH}", "-r", str(FPS), "-i", "-", "-vf", "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p",
+enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{OW}x{OH}", "-r", str(FPS), "-i", "-", "-vf", (os.environ["GRADE"] + "," if os.environ.get("GRADE") else "") + "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p",
     "-c:v", "libx264", "-preset", "medium", "-crf", "13", "-g", "30", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv", out], stdin=subprocess.PIPE)
 buf = collections.OrderedDict(); cset = {c + MORPH: c for c in cuts}; strips = {}; hold = 2 * MORPH + 2
 def emit(i, f):

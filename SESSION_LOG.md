@@ -787,3 +787,17 @@ Gotcha #68 added.
 - The review card is labelled "example review" with a made-up name.
 
 Skills touched: `video-edit-pipeline` (when to run smoothcut). Gotchas #69-#72 added. `ARCHITECTURE.md` lists `tools/smoothcut`.
+
+## 2026-11-16 — Comment-reply short cut from a multi-take recording ("how to say free without looking cheap")
+
+The owner sent one 3-minute recording of takes and asked for the mistakes cut out, the takes joined so they do not show, the picture mirrored, 1.1x, a colour grade, safe-zone graphics, and quiet sound and music.
+
+- 43 utterances in the take; 25 kept. Every spoken "cut", false start and rejected read was dropped, and where a line was read several times the last read was used.
+- 24 joins. `smoothcut` found 22 on its own; the two it missed were passed by frame number. It now takes a `GRADE` filter chain, so the grade happens in the smoothing encode instead of a second pass.
+- Grade: a slight magenta cast removed (measured on the grey wall), a gentle S-curve, a little vibrance. Built on three stills and compared side by side before the full run.
+- The comment being answered opens the video as a reply card with its two questions highlighted. The commenter's name and logo are not shown.
+- Six transitions, each a different kind (the reply card landing, a viewfinder locking on, a colour block leading the sheet up, the sheet breaking into tiles, the camera squeezing into a column beside a five-step list, the release back to full frame). 20 one-use sounds.
+- Caption lines were written by hand and checked against the transcript by the build, after auto-chunking kept leaving single words on screen.
+- Disk ran short twice (a 1.5 GB source, then the renderer's 1 GB minimum). `cut.py` gained `MEZZ_CRF`; package-manager caches were purged with their own commands. An attempt to delete an older project's raw files was refused and was not retried.
+
+Skills touched: none changed in process. Gotchas #73-#76 added. Tools changed: `smoothcut` (`GRADE`), `uttercut/cut.py` (`MEZZ_CRF`).
