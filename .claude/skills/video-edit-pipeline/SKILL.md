@@ -136,6 +136,12 @@ Invoke **branded-ad-edit** and run its phases in order:
    - Prove it with `tcheck.py` and `headchk.py` (see its README and gotcha #45).
    Reviewers judge the whole edit by this pacing. "No pause before I talk,
    seamless, bang bang bang" is the bar.
+   **When the brief is "make it look like it has no cuts"** (the speaker has
+   already cut the take, or the base cut is full of joins): run the cut through
+   `tools/smoothcut/smooth.py` before building graphics. It face-locks every
+   segment and morphs the frames around each join, so the head never jumps.
+   Then move the camera only slowly and continuously in the composition; a
+   punch-in on a join brings the cut back (gotchas #69, #70).
 2. **Transcribe** with whisper-cli (word timestamps). The transcript drives
    captions, card-per-line timing, and the storyboard beats.
 3. **Storyboard from the style guide.** Every spoken line maps to a beat:

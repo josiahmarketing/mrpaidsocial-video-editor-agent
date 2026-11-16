@@ -767,3 +767,23 @@ The owner asked for the blur to cover only the printed box on his shirt instead 
 
 Gotcha #68 added.
 
+
+## 2026-11-16 — Two shorts: a talking head with no visible cuts, and a voice-over told inside a video editor
+
+**1. Talking head, "your ads are picking your customers" (comment TRUST).** The owner had already cut the take himself and asked for it to "look like it has no cuts", with strong transitions, graphics and captions inside the platform safe zones.
+
+- New `tools/smoothcut/smooth.py`: finds the joins (16 in a 38 s take), locks the face to one position and size across them, and replaces the frames around each join with optical-flow in-betweens. Hands still change within one or two frames; the head does not move.
+- The speaker sits right of centre in the source, so holding the face left a band at the right edge that the source did not cover. A sharp mirror fill showed as a repeated sleeve fold; the band is now blurred and feathered.
+- With the take locked, the camera only pushes slowly. Pace comes from five transitions, each a different kind (focus-in, the camera irising into a speaker bubble, the bubble popping open, vertical blinds, a diagonal split) and 18 one-use sounds.
+- The first render had about two seconds of near-empty paper after the blinds closed. Found on a 2 fps strip of the finished file; filled with a large headline that shrinks into the scene label. List rows now arrive dimmed and light up as they are spoken.
+- The "Facebook learns from whoever fills out your form" scene quotes Meta's ad-targeting page ("our system will learn who is engaging with it and, over time, narrow your audience"). "Most accounts we take over" is shown as his statement.
+- Sound effects first measured about 19 dB under the voice peaks; lowered to about 21 dB to match the last approved level.
+
+**2. Voice-over, "your guarantee is in the wrong spot" (comment LAST).** He asked for a unique motion-graphics style and to keep it engaging.
+
+- The whole video plays inside a video editor: a preview monitor above the ad's 30-second timeline. The guarantee clip starts at 0:00; a cursor picks it up and drops it into the last ten seconds; the playhead then walks the fixed order (after, proof, guarantee, call) with one preview per clip.
+- Everything readable sits in the safe box. The area outside it carries faint timeline lanes with no text, so the frame does not look empty under the app's buttons.
+- The playhead, both timecode readouts and the waveform are always moving. Ten transitions, each a different kind; 15 one-use sounds; viewers are drawn as flat face chips, not generated.
+- The review card is labelled "example review" with a made-up name.
+
+Skills touched: `video-edit-pipeline` (when to run smoothcut). Gotchas #69-#72 added. `ARCHITECTURE.md` lists `tools/smoothcut`.

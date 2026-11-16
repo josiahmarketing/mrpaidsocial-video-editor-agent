@@ -52,6 +52,7 @@ tools/uttercut/            # utterance-level base cut for script-read takes: spl
 tools/remix/               # rebuild a composition's audio mix from its <audio> tags (audio-only revisions without a video re-render)
 tools/safezone/            # check that a composition's text and cards stay inside the platform safe box at every moment
 tools/printblur/           # blur only a printed graphic on clothing through a cut, keeping hands in front of it sharp (track.py + blur.py)
+tools/smoothcut/           # make a jump-cut talking head read as one take: face-lock each segment, optical-flow in-betweens at every cut, soft edge fill
 scripts/
   setup.sh                # idempotent local setup + optional relative skill symlinks
   check-setup.sh           # offline lane-aware doctor; never downloads through npx
