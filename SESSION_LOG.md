@@ -820,3 +820,11 @@ The owner filmed both from a script, reading line by line with retakes, and aske
 
 Skills touched: none changed in process. Gotchas #78-#81 added. Tools changed: `smoothcut` (`OUT`, `AW`, landscape QA strips), `bgmatte/blurbg.py` (`CRF`, `GOP`).
 
+**Same job, later (2026-11-17).** The cloud machine was replaced while the two finished videos were being mastered; footage, working files, installed packages and the gitignored context file were gone. Rebuilt from the pushed branch, the session record (builds and every later edit replayed in order), the footage links and the generation history. Both cuts came back byte-identical, so the saved plans and builds applied unchanged. Both videos were then delivered.
+
+- Revision 2 of the second video: the owner wanted a sentence finished that the first cut had trimmed to match the script ("a week or more" had lost "even sometimes a day"). An ad-lib that completes a sentence is part of the sentence: keep it, and add it to the graphic.
+- Before delivery, three things found on 2 fps strips of the finished file were fixed: a dark wedge while the camera shrank into the speaker bubble (the paper now sits under the camera from the start), headers that showed, vanished and rose again (they start hidden), and scenes that sat half empty (upcoming rows are shown dimmed and light up when spoken).
+- A second restart kept the disk and only stopped the jobs. A render launched from a detached subshell died with "parent exited"; renders now run as tracked background tasks.
+
+Tools changed: `uttercut/joinchk.py` (new: listens across every join), `smoothcut` (`SMIN`). Gotchas #82-#84 added.
+

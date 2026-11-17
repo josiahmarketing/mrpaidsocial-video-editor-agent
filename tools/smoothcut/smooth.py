@@ -12,6 +12,8 @@
 # HPAD / VPAD px of mirrored edge allowed at the sides / bottom to hold that position (0), MORPH (3),
 # CUTS="f1,f2" extra cut frames, QA=dir (a strip of frames around every cut + meta.json).
 # OUT="1920x1080" sets the output size (default 1080x1920); AW is the width the face is tracked at (540; use 960 for landscape).
+# SMIN=<scale> is the smallest zoom a segment may get (default none): with takes where the speaker sits at two distances,
+# SMIN=1.0 stops the closer one from being shrunk until the source no longer covers the frame.
 # GRADE="<ffmpeg filters>" applies a colour grade in the same encode (one generation, no extra pass over the picture).
 import sys, os, json, subprocess, collections, numpy as np, cv2, mediapipe as mp
 from mediapipe.tasks import python as mpp
@@ -53,6 +55,7 @@ for a, b in zip(edges[:-1], edges[1:]):
         for arr in (mid[:, 0], mid[:, 1], dist):
             v = arr[a:b].copy(); q = np.pad(v, 2, mode="edge"); arr[a:b] = (q[:-4] + 2 * q[1:-3] + 3 * q[2:-2] + 2 * q[3:-1] + q[4:]) / 9
 Dref = float(np.median(dist)); med = np.array([np.median(mid[a:b], axis=0) for a, b in zip(edges[:-1], edges[1:])]); s = np.array([S0 * Dref / np.median(dist[a:b]) for a, b in zip(edges[:-1], edges[1:])])
+s = np.maximum(s, float(os.environ.get("SMIN", 0)))   # SMIN=1.0: a segment where the speaker leans in keeps its larger face instead of shrinking past the frame edge
 EX = float(os.environ.get("EYE_X", OW / 2)); MG = float(os.environ.get("MARGIN", 45)); Tk = np.zeros((K, 2))
 HP = float(os.environ.get("HPAD", 0)); VP = float(os.environ.get("VPAD", 0))     # px of mirrored edge allowed at the sides / at the bottom
 for k in range(K):

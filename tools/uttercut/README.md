@@ -14,6 +14,7 @@ utterances first makes every restart its own visible line.
 | *(one-breath takes)* | A take with almost no gaps between utterances has no room tone to measure. `voiceclean.py` then profiles the quietest frames of the whole take, and `cut.py` uses the quietest 1 % as its floor, so quiet sentence endings are kept. |
 | `gaze.py <video> <out.json>` | Per-frame blink and gaze scores, to find stretches where the speaker's eyes are on the script instead of the lens. |
 | `tcheck.py <part>...` | Compare what the cut should say (source words inside each EDL piece) with a fresh transcript of the cut (`<part>/words.json`). Lists missing or added words with their output times. |
+| `joinchk.py <part>` | Transcribe about 2.3 s across every join of the cut with a second model and print what is heard at each one. A `from` or `to` trim can leave a spoken "cut", half a word or a doubled word at the join that the utterance transcript does not show. |
 | `headchk.py <src> <t>...` | Transcribe 1.8 s from each start time. Use it to prove a piece's first word survives, or to find a clean edge by trying a few nearby times. |
 
 ## Plan format
@@ -40,7 +41,7 @@ utterances first makes every restart its own visible line.
    - Skip a line that is read again later; take the later read.
 3. Run `DRY=1 cut.py`, then `cut.py`. Scan the cut for silences over 0.2 s before going on: a loud room tone can pad every join.
 4. Transcribe the cut and run `tcheck.py`.
-5. Check every flagged head or tail with `headchk.py`. Transcribers drop or mishear fast,
+5. Run `joinchk.py` and read every join. Then check every flagged head or tail with `headchk.py`. Transcribers drop or mishear fast,
    quiet words such as "you get", "it was… okay", or a trailing "so…".
 6. Fix an edge with `start` / `end`, and re-cut.
 7. For "immediate" cuts use `LEAD=0.04 TAIL=0.06 MAXPAUSE=0.2`, then run `gaze.py` on the cut. Glances at the end of a
