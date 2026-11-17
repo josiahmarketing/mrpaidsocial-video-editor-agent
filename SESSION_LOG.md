@@ -845,3 +845,16 @@ The owner filmed a nine-step breakdown from a script in one 9-minute take, readi
 - The chat upload limit is 400 MiB: a 16 Mbps master of a three-minute video is over it. The upload master was re-encoded at 12 Mbps (audio copied) and the phone copy sent beside it.
 
 Skills touched: none changed in process. Gotcha #85 added.
+
+**Revision 2 of the breakdown, a lip-sync bug, and a notebook short (same day).** The owner's notes on the breakdown: a line read as the opposite of what he meant, the voice did not match his lips, and the background should be blurred.
+
+- Lip sync: measured, not guessed. Each cut piece had been encoded with picture and sound together, the encode stopped when the picture was done, and 0-22 ms of that piece's sound were lost. Joined, the voice slid early by about 5 ms per join: 0.35 s over 74 pieces. On top of that the render had used a voice file encoded one cut earlier. The cutter now assembles sound apart from the picture, sample-exact, and refuses a cut whose picture and sound differ in length. Two checks were added and run on the finished masters: every piece's voice against its picture position, and mouth opening against the voice compared with the camera original. The picture was not re-cut: the audio was rebuilt and the word timings moved onto the exact timeline, so every caption and graphic followed.
+- Two earlier deliveries made with the same cutter carried a smaller drift (about 0.1 s by the end). Both were repaired the same way and sent again as new versions, with the reason stated.
+- The "opposite meaning" line: he says "nothing of what we did is a secret"; the caption chunks split it so one chunk read "is a secret", and the card bolded "a secret". The card and caption now read as he means it. A negation and the thing it negates stay in one chunk.
+- Background blur was applied to the whole base, including the stretches only seen in the face-cam circle, and is now a default for his face-cam videos.
+- A master over the chat's upload limit was caught on the first delivery; the mastering script now takes a video bitrate.
+- The short: a 4K overhead shot of a handwritten page with a voice-over, no face. The page plays full frame for the hook, the first section and the close, and sits in a window above designed scenes for the other sections; highlights and pencil rings are placed in page coordinates inside the same moving container as the footage, so they stay on the handwriting through every camera move. Joins are short dissolves (a static shot has nothing to face-lock). The handwriting is too small to carry the message on a phone, so each line is also typed large inside the safe box; the safe-zone check passed with nothing outside.
+- Two camera tweens that overlapped in time made the page lurch; a comment placed mid-line silently disabled a camera move. Both were caught on snapshot strips before rendering.
+- Generation spend was under-quoted twice (music costs about 0.145 credits per second); the delivery states the real figures from the transaction list.
+
+Tools changed: `uttercut/pieces.py` (new), `uttercut/synccheck.py` (new), `uttercut/cut.py`, `avsync/lipsync.py` (new). Gotchas #86-#89 added.
