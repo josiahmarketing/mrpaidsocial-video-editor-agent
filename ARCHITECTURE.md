@@ -49,6 +49,7 @@ tools/editor/              # Python stdlib project state, stage resume and foota
   tests/                  #   state, failure, cache, media and review-import regressions
 tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
 tools/uttercut/            # utterance-level base cut for script-read takes: split at pauses, keep clean reads, verify edges
+tools/avsync/              # lipsync.py: mouth opening vs the file's own voice, to compare an edit with the camera original
 tools/remix/               # rebuild a composition's audio mix from its <audio> tags (audio-only revisions without a video re-render)
 tools/safezone/            # check that a composition's text and cards stay inside the platform safe box at every moment
 tools/printblur/           # blur only a printed graphic on clothing through a cut, keeping hands in front of it sharp (track.py + blur.py)

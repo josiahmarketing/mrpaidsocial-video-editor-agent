@@ -16,6 +16,8 @@ utterances first makes every restart its own visible line.
 | `tcheck.py <part>...` | Compare what the cut should say (source words inside each EDL piece) with a fresh transcript of the cut (`<part>/words.json`). Lists missing or added words with their output times. |
 | `joinchk.py <part>` | Transcribe about 2.3 s across every join of the cut with a second model and print what is heard at each one. A `from` or `to` trim can leave a spoken "cut", half a word or a doubled word at the join that the utterance transcript does not show. |
 | `headchk.py <src> <t>...` | Transcribe 1.8 s from each start time. Use it to prove a piece's first word survives, or to find a clean edge by trying a few nearby times. |
+| `pieces.py` | The cut's sound, built sample-exactly from the EDL (used by `cut.py`). Each piece is decoded on its own, padded or trimmed to exactly `frames x 1600` samples and joined in memory. Encoding sound next to the picture loses the last milliseconds of every piece, and the loss adds up join by join into a visible lip-sync drift. |
+| `synccheck.py <part> <file>` | Find every piece's voice in a file (the cut's audio, the encoded voice track, or the FINISHED master) and print how far it sits from the piece's picture position; exit 1 beyond `TOL` ms (default 15). `--fix out.wav` rebuilds a drifted cut's audio exactly; `--remap words.json old-audio out.json` moves word times measured on the drifted audio onto the exact timeline. |
 
 ## Plan format
 

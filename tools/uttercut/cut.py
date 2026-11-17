@@ -75,16 +75,19 @@ print(k, len(segs), "pieces", round(t, 2), "s", flush=True)
 if os.environ.get("DRY"): sys.exit()
 crop = P.get("vf", "scale=1920:1080:flags=lanczos")
 os.makedirs(f"{k}/segs", exist_ok=True); lst = []
-for i, (s, e) in enumerate(segs):
+for i, (s, e) in enumerate(segs):   # PICTURE ONLY per piece: sound encoded alongside it loses its last milliseconds (see pieces.py)
     d = e - s; nf = round(d * 30 / SPEED); f = f"{k}/segs/{i:03d}.mov"; lst.append(f"file 'segs/{i:03d}.mov'")
-    tempo = f"atempo={SPEED},apad,atrim=0:{nf / 30:.4f}," if SPEED != 1 else ""
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{d + 0.2:.4f}", "-i", src] + (["-ss", f"{s:.4f}", "-t", f"{d:.4f}", "-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0"] if AUDIO else []) + ["-frames:v", str(nf), "-t", f"{nf / 30:.4f}", "-r", "30",
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{d + 0.2:.4f}", "-i", src, "-an", "-frames:v", str(nf), "-r", "30",
                     "-vf", f"fps={30 / SPEED:.6f},{crop},setsar=1,format=yuv420p,setpts=N/(30*TB)",
-                    "-af", f"aformat=sample_rates=48000:channel_layouts=stereo,{tempo}afade=t=in:d=0.01,afade=t=out:st={max(0, nf / 30 - 0.012):.4f}:d=0.012",
-                    "-c:v", "libx264", "-preset", "fast", "-crf", os.environ.get("MEZZ_CRF", "10"), "-g", "1", "-bf", "0", "-c:a", "pcm_s16le", f], check=True)   # MEZZ_CRF=15 halves the mezzanine when disk is short
+                    "-c:v", "libx264", "-preset", "fast", "-crf", os.environ.get("MEZZ_CRF", "10"), "-g", "1", "-bf", "0", f], check=True)   # MEZZ_CRF=15 halves the mezzanine when disk is short
 open(f"{k}/list.txt", "w").write("\n".join(lst) + "\n")
-subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", f"{k}/list.txt", "-c:v", "copy",
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import pieces
+pcm = pieces.build(dict(speed=SPEED, segments=edl), AUDIO or src); pieces.write_wav(f"{k}/cut.wav", pcm)   # every piece exactly frames * 1600 samples
+subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", f"{k}/list.txt", "-i", f"{k}/cut.wav", "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
                 "-af", os.environ.get("AFINAL", "aresample=48000" if AUDIO else "highpass=f=80,afftdn=nf=-32,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120,loudnorm=I=-16:TP=-1.5:LRA=7,aresample=48000"),
                 "-c:a", "pcm_s16le", f"{k}/mezz.mov"], check=True)
+dv, da = [float(subprocess.run(["ffprobe", "-v", "error", "-select_streams", x, "-show_entries", "stream=duration", "-of", "csv=p=0", f"{k}/mezz.mov"], capture_output=True, text=True).stdout.split()[0]) for x in ("v:0", "a:0")]
+if abs(dv - da) > 0.01: raise SystemExit(f"{k}: picture {dv:.3f} s but sound {da:.3f} s - the cut would drift out of sync")
+os.remove(f"{k}/cut.wav")
 import shutil; shutil.rmtree(f"{k}/segs"); os.remove(f"{k}/list.txt")
 print("mezz ok", k, flush=True)
