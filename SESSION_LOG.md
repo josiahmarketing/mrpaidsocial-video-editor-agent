@@ -828,3 +828,20 @@ Skills touched: none changed in process. Gotchas #78-#81 added. Tools changed: `
 
 Tools changed: `uttercut/joinchk.py` (new: listens across every join), `smoothcut` (`SMIN`). Gotchas #82-#84 added.
 
+
+## 2026-11-17 — A long-form YouTube breakdown of a client result (face cam only, "screen" sections rebuilt as graphics)
+
+The owner filmed a nine-step breakdown from a script in one 9-minute take, reading line by line with retakes, and asked for lots of motion graphics, the parts where he read off his screen shown as a small face cam plus screen-style graphics, seamless joins, the mistakes cut, the picture mirrored and 1.1x.
+
+- 104 utterances in the take, 74 pieces kept, 3:17 finished. The script header guessed 10-12 minutes; the clean reads hold about a third of that, and the delivery says so instead of padding.
+- No screen recording existed. Each "screen" section is a full-screen scene in the brand look (a maths window, an illustrated map labelled as an illustration, an example form, a five-node workflow, example caller-ID phones, a loop) with his face in a circle; two real screenshots he had already supplied (the client's text, the ad-account totals) carry the proof. Mock screens are labelled as examples.
+- The take mixes two camera distances: sitting back for the to-camera parts, leaning in to read. One face-lock setting could not serve both, so the two full-frame stretches were smoothed with constrained settings, the middle (only ever seen in the circle) with a free centred pass, and the three were spliced by frame number under the first step card. Gotcha #85.
+- The results were spoken leaning in, so they play as a screen scene too, and the camera comes back exactly on the next cut.
+- Nine step cards, each with its own sound; "STEP n OF 9" stays on a chip. Chapter times for the player are listed in the delivery (two steps are under ten seconds, so they share one chapter).
+- Join check: four `from` trims hid a spoken "cut" or a doubled word; they were replaced by explicit start/end times and the join listener came back clean. One aside from the cold open was moved to after the results, where it explains the number it qualifies. His ad-libs were kept whole.
+- A figure in the brief (a margin percentage) did not match the numbers he says on camera, so the graphic shows the spoken numbers and their difference only; flagged in the delivery.
+- 30 one-use sounds, two music tracks crossfaded at the midpoint, music about 22 dB under the voice.
+- Checks on the finished file (2 fps strips at every scene start) found two panels that sat half empty for three to five seconds: a window whose rows only appeared when spoken, and a card with room left for a second paragraph. Both now show the coming lines dimmed from the start; the video was rendered again before delivery.
+- The chat upload limit is 400 MiB: a 16 Mbps master of a three-minute video is over it. The upload master was re-encoded at 12 Mbps (audio copied) and the phone copy sent beside it.
+
+Skills touched: none changed in process. Gotcha #85 added.
