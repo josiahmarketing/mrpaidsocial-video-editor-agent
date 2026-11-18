@@ -2,7 +2,7 @@
 import sys, os, subprocess, numpy as np, cv2, onnxruntime as ort, time
 inp, out = sys.argv[1], sys.argv[2]
 ss, dur = (float(sys.argv[3]), float(sys.argv[4])) if len(sys.argv) > 4 else (None, None)
-W, H, FPS = 1920, 1080, 30
+W, H = map(int, os.environ.get("SIZE", "1920x1080").split("x")); FPS = 30   # SIZE=1080x840 for a split-screen half; set MW/MH to the same shape in multiples of 32
 so = ort.SessionOptions(); so.intra_op_num_threads = 4
 import os; sess = ort.InferenceSession(os.environ.get("MODNET", os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "modnet.onnx")), so)
 dec = ["ffmpeg", "-v", "error"] + (["-ss", str(ss), "-t", str(dur)] if ss is not None else []) + ["-i", inp, "-vf", f"fps={FPS}", "-pix_fmt", "bgr24", "-f", "rawvideo", "-"]

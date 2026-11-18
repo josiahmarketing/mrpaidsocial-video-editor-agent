@@ -858,3 +858,18 @@ Skills touched: none changed in process. Gotcha #85 added.
 - Generation spend was under-quoted twice (music costs about 0.145 credits per second); the delivery states the real figures from the transaction list.
 
 Tools changed: `uttercut/pieces.py` (new), `uttercut/synccheck.py` (new), `uttercut/cut.py`, `avsync/lipsync.py` (new). Gotchas #86-#89 added.
+
+## 2026-11-18 — A split-screen short from a silent tablet recording and a separate camera take
+
+The owner sent a tablet screen recording of a prepared drawing (he circles and underlines parts while talking) and a script written for a split screen, and asked for clean transitions, focus zooms on what he is talking about, no transition or sound used twice, and the line-by-line reads cut together, keeping his off-script wording.
+
+- The screen recording's audio was digital silence, and the first camera link was a different video (found from its transcript, not its name). Both were reported with the evidence; the right clip arrived and the edit started. Check what a file is before building on it.
+- The two recordings were lined up from content: stroke times in the screen recording against phrases in the camera transcript. The microphone gated out the pencil, so sound could not do it; body motion in the camera clip confirmed the offset within a few tenths of a second.
+- The screen recording was not usable as it was: app bars, a floating toolbar over the drawing, pinch zooms between takes. Every frame is now fitted to one clean image of the drawing, so the output is steady and toolbar-free with his strokes kept, and all camera moves in the edit share one coordinate system. New tool: `tools/screencanvas`.
+- He draws each underline just after saying the line, in the pause the cut removes. The recording is slid under each piece (a per-piece shift) so the stroke plays under the words.
+- Layout: camera on top, canvas below, captions on the seam. The first layout put the seam too low: only 400 px of the canvas was above the platform's own text. The camera half was reduced so the thing being talked about always sits in the upper 500 px of the canvas.
+- The recorded page "white" was 251,253,250 and showed as a box against the page; lifting it in the composition and clipping the video's edge rows removed the edge.
+- Face side: he looks down with hair over his face for a third of the cut, so a face-lock had nothing to hold. Joins are 3-frame dissolves (5 frames ghosted two heads). The crop keeps a printed T-shirt graphic he wanted hidden out of frame.
+- Checks on the finished file: every piece's voice within 2 ms of its picture; lips against voice equal to the camera original; safe-zone check clean; loudness -14 LUFS.
+
+Tools changed: `screencanvas/` (new: `track.py`, `canvas.py`, `mkcanvas.py`), `bgmatte/blurbg.py` (`SIZE` for frames other than 1920x1080).
