@@ -873,3 +873,5 @@ The owner sent a tablet screen recording of a prepared drawing (he circles and u
 - Checks on the finished file: every piece's voice within 2 ms of its picture; lips against voice equal to the camera original; safe-zone check clean; loudness -14 LUFS.
 
 Tools changed: `screencanvas/` (new: `track.py`, `canvas.py`, `mkcanvas.py`), `bgmatte/blurbg.py` (`SIZE` for frames other than 1920x1080).
+
+**Revision 2 (same day).** The owner approved the first cut ("everything else is really smooth") and asked for the face cam mirrored and a little more of it, lower, so more of his face shows while he looks down at the tablet. The camera half grew from 680 to 790 px and its crop moved 120 px down the source frame; only the camera is mirrored, the drawing stays readable. Every canvas view was re-aimed for the smaller window. One view then put a word of the drawing half under the caption bar: caught on the finished file's overview sheet, re-aimed and rendered again before delivery. When a layout's proportions change, look at every view again, not only the ones that were touched.
