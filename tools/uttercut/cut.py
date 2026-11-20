@@ -5,6 +5,10 @@
 #   {"u", "from"}      -> start at the LAST occurrence of that word sequence inside the utterance (drops a restart)
 #   {"u", "to"}        -> end after the FIRST occurrence of that word sequence
 #   {"u", "start"/"end"} -> absolute source seconds, for edges the word timestamps get wrong (verify with headchk.py)
+#   {"u", "pre": 1.6}  -> also keep that many SOURCE seconds before the utterance's (tightened) start, untouched: the
+#                         speaker listening before they answer, for a second voice laid over it in the edit. Continuous
+#                         footage, so there is no join between the listening and the answer.
+#   {"range": [a, b]}  -> a verbatim source range with no utterance (a listening or reaction shot from elsewhere in the take)
 # Each piece is tightened to the voice (first/last frame above p90-EDGE_DB) with LEAD before and TAIL after, so sentences
 # finish but room tone between them is gone; inner pauses longer than MAXPAUSE are shrunk the same way (0 = keep them).
 import sys, os, json, re, subprocess, math
@@ -36,6 +40,7 @@ def tail(t, cap=0.35):
     return j / 100 + 0.06
 segs = []
 for item in P["keep"]:
+    if isinstance(item, dict) and "range" in item: segs.append([round(math.floor(item["range"][0] * 30) / 30, 4), round(math.ceil(item["range"][1] * 30) / 30, 4)]); continue
     if isinstance(item, int): u = utts[item]; s, e = u["s"] - 0.04, u["e"] + 0.06
     else:
         u = utts[item["u"]]; W = u["words"]; s, e = u["s"] - 0.04, u["e"] + 0.06
@@ -63,6 +68,7 @@ for item in P["keep"]:
                 if (i - st) / 100 > MAXPAUSE and st > 0 and i < len(on): out.append([cur, (base + st) / 100 + TAIL]); cur = (base + i) / 100 - LEAD
                 st = None
         out.append([cur, e]); parts = [p for p in out if p[1] - p[0] > 0.08]
+    if isinstance(item, dict) and item.get("pre"): parts[0][0] -= float(item["pre"])
     for s, e in parts: segs.append([round(math.floor(s * 30) / 30, 4), round(math.ceil(e * 30) / 30, 4)])   # floor starts, ceil ends: never shave a frame of speech
 for i in range(1, len(segs)):
     if segs[i - 1][0] < segs[i][0] < segs[i - 1][1]: segs[i][0] = segs[i - 1][1]
