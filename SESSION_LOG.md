@@ -892,3 +892,18 @@ The owner sent one take and a cleaned script and asked for the usual talking-hea
 Tools changed: `printblur/track.py` (seed fallback). Gotchas #90-#92 added.
 
 - Delivery of the same short: the worker restarted once during the render with a single job running; the working files survived and the render was started again. A dimmed preview of two count-up figures showed "$0" for two seconds before he said the numbers; the preview now shows the real figures. Found on a strip of the finished file, fixed and rendered again before sending.
+
+## 2026-11-20 — Revision 2 of the talking-head short: tighter cut, a new graphics look, sounds that can be heard
+
+The owner's notes on the first cut: start on the first word; no pause at the joins, but whole sentences; add sound effects; not the motion graphics "we always use"; better transitions with sound; music and sounds present but not too loud; everything inside the TikTok and Instagram safe zones.
+
+- Cut: pieces trimmed to the voice itself (`LEAD=0.025 TAIL=0.045 MAXPAUSE=0.24`), the first piece starting 30 ms before the first word, explicit ends on two utterances that finished on a breath. 27 pieces, 68.6 s (was 71.8 s). No sentence is cut. Gotcha #93.
+- "Add sound effects" on a cut that had nineteen: they were levelled by peak, and the short clicks carried 15-20 dB less energy than the tonal sounds at the same setting, so they sat under the music. Every sound is now levelled by the energy of its loudest 50 ms, with a peak cap; the build reads the measurements. Music raised 4.6 dB. Gotcha #94.
+- Look: paper and marker instead of the card style (notebook page, taped photo of the camera, sticky notes, torn scraps, index cards, stick figures, hand-drawn rings, ticks and crosses). Gotcha #95. Tilted notes pushed their rotated corners outside the safe box on the first check and were inset.
+- Three layout changes, each a different move with its own sound: the photo flies up to fill the frame, the camera snaps back into the photo, the photo rushes the lens. Page content is sent behind the camera for the move so nothing crosses his face.
+- The tight cut shortened the gaps the graphics lived in: the red crosses had 0.3 s and the big line 2.5 s. Entrances were moved onto the word that triggers them and exits held into the next sentence. After tightening a cut, re-read every graphic's time on screen.
+- On the window layout his chin sat on the safe-zone line in some frames (measured with face landmarks on preview frames); the photo and captions were raised 24 px and the photo lengthened so the lower frame is not empty paper.
+- Checks on the finished file: decodes clean, -14.0 LUFS, voice within 2 ms of the picture on all 27 pieces, lips against voice the same as the camera original, safe-zone check clean, transition strips read frame by frame.
+
+Skills touched: `branded-ad-edit/references/gotchas.md` (#93-#95).
+
