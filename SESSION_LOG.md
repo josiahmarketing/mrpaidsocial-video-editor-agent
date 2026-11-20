@@ -907,3 +907,17 @@ The owner's notes on the first cut: start on the first word; no pause at the joi
 
 Skills touched: `branded-ad-edit/references/gotchas.md` (#93-#95).
 
+## 2026-11-20 — A tier-list short where a generated voice asks and the speaker answers
+
+The owner filmed a ranking video without saying the options: he pauses, then answers ("I'll put this in D tier..."). He asked for a generated female voice to ask "the questions", cuts with no pauses, an actual tier-list graphic, and the usual sound, music, captions and safe zones.
+
+- The transcript showed the format; the brief did not. The second voice's six lines were written to fit the answers he recorded, and the delivery lists them.
+- His pauses became picture: each answer was extended backwards over his own listening (`pre` in the cut plan), so the voice plays over him listening and his answer starts within 60 ms of her last word. Where the kept retake had no usable pause, a listening shot from the first attempt was used (`range`). Tool change: `uttercut/cut.py`. Gotcha #96.
+- The direct speech service had no credits left; the same engine through the generation service worked. Short lines generated one by one ended inside their last consonant; generated as one take with pauses and split, they end naturally. Gotcha #97.
+- The take holds three framings (to camera, at the frame's edge looking across, to camera). Each was cut and face-locked as its own part and the parts were joined in one encode. The edge-of-frame section is shown as a tall tile whose outer edge is the source's edge, with the board on the side he looks at. Gotcha #99.
+- Tracked blur over the print on his shirt came out in patches where his hands crossed it; the tile now blurs and fades its lowest rows, and the closing shot uses one fixed soft-edged box. Gotcha #98.
+- A join step failed on an invalid filter option while its script still printed "done"; the stale file was noticed by its timestamp. Gotcha #100.
+- Checks on the finished file: decodes clean, -14.0 LUFS, voice within 2 ms of the picture on every measurable piece, the picture's cut points on the frames the cut list gives, safe-zone check clean, her lines about 2 dB under his. The lip-against-voice estimate could not be used: its windows here are 2-4 s and it misread the untouched camera file as well.
+
+Skills and tools touched: `tools/uttercut/cut.py`, `branded-ad-edit/references/gotchas.md` (#96-#100).
+
