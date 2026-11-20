@@ -21,7 +21,10 @@ ref = np.frombuffer(raw, np.uint8).reshape(H, W, 3); roi = ref[ry:ry + rh, rx:rx
 # the print = the bright connected region around the seed point (dark garment around it)
 br = (roi.max(axis=2) > 85).astype(np.uint8); br = cv2.morphologyEx(br, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
 n, lab, st, _ = cv2.connectedComponentsWithStats(br, 8); k = lab[sy - ry, sx - rx]
-if k == 0: raise SystemExit("seed is not on the print in the reference frame")
+if k == 0:   # the seed fell on a dark part of the picture inside the print (hair, a shadow): take the nearest bright region
+    ys, xs = np.nonzero(lab); d = np.hypot(ys - (sy - ry), xs - (sx - rx)) if len(ys) else np.array([1e9]); j = int(np.argmin(d))
+    if d[j] > 200: raise SystemExit("seed is not on the print in the reference frame (nearest bright region is over 200 px away)")
+    k = lab[ys[j], xs[j]]; print(f"seed was on a dark spot; using the bright region {d[j]:.0f} px away", file=sys.stderr)
 x, y, w, h = st[k, :4]
 # a hand or arm touching the print in the reference frame widens the box: take the left/right edges from the top third only
 top = (lab[y:y + max(40, h // 3), x:x + w] == k).mean(axis=0) > 0.5; cols = np.where(top)[0]

@@ -875,3 +875,18 @@ The owner sent a tablet screen recording of a prepared drawing (he circles and u
 Tools changed: `screencanvas/` (new: `track.py`, `canvas.py`, `mkcanvas.py`), `bgmatte/blurbg.py` (`SIZE` for frames other than 1920x1080).
 
 **Revision 2 (same day).** The owner approved the first cut ("everything else is really smooth") and asked for the face cam mirrored and a little more of it, lower, so more of his face shows while he looks down at the tablet. The camera half grew from 680 to 790 px and its crop moved 120 px down the source frame; only the camera is mirrored, the drawing stays readable. Every canvas view was re-aimed for the smaller window. One view then put a word of the drawing half under the caption bar: caught on the finished file's overview sheet, re-aimed and rendered again before delivery. When a layout's proportions change, look at every view again, not only the ones that were touched.
+
+## 2026-11-20 — A tightly framed talking-head short with a funnel hook and a lead-by-lead audit
+
+The owner sent one take and a cleaned script and asked for the usual talking-head treatment plus three visual beats: a funnel that fills as he counts in the hook, six checks and a red cross when he walks through what happened to the leads, and one line in big type.
+
+- 33 utterances, 27 kept, 71.8 s at 1.1x; three retakes inside single utterances trimmed with `from`, each start verified against the voice envelope and by listening. Sync checked on the cut (0 ms) and again on the finished file.
+- The framing was tight, so the short uses two layouts: the camera full frame with one small card above the head, and a paper "board" with the graphic on top and the camera in a window below, for the hook and the audit. Gotcha #90.
+- The window is footage and may extend past the text-safe line; a first version kept it inside the safe box and left the bottom third of the frame empty.
+- Captions used to slide across his face when the layout changed; they now fade, jump and return. Gotcha #91.
+- The first render was stopped a minute in: the automatic caption chunks crossed sentence boundaries and split a negation from its object. The lines were rewritten by hand and checked against the transcript by the build. Gotcha #92. (The context file already said to do this for scripted shorts; read it before building, not after.)
+- The print on his T-shirt was blurred with `printblur` (83 % of frames tracked directly, the rest bridged); the tracker's seed point first fell on a dark part of the print and the tool stopped. It now falls back to the nearest bright region.
+- On-screen figures follow what he says where it differs from the script (a job price), and the delivery says so.
+- 19 one-use sounds, one new music track; fifteen entrances and layout changes, none repeated (the build throws on a repeat).
+
+Tools changed: `printblur/track.py` (seed fallback). Gotchas #90-#92 added.
