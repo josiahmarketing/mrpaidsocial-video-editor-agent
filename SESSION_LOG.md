@@ -890,3 +890,5 @@ The owner sent one take and a cleaned script and asked for the usual talking-hea
 - 19 one-use sounds, one new music track; fifteen entrances and layout changes, none repeated (the build throws on a repeat).
 
 Tools changed: `printblur/track.py` (seed fallback). Gotchas #90-#92 added.
+
+- Delivery of the same short: the worker restarted once during the render with a single job running; the working files survived and the render was started again. A dimmed preview of two count-up figures showed "$0" for two seconds before he said the numbers; the preview now shows the real figures. Found on a strip of the finished file, fixed and rendered again before sending.
