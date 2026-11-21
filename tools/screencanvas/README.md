@@ -72,5 +72,6 @@ is steady in plate coordinates, the edit can hold parts back and bring them in w
 
 Environment: `SRC` (recording path, default `dl/raw.mp4`), `FRAME` (its size, default `2732x2048`), `MARKUP_FROM` (second at
 which the app's bars appear, default 0), `CHROME` (height of the top bars in px, default 196), `PATCH` (one plate rectangle
-to paint white), `OFFSET` (seconds the recording runs ahead of the camera, default 0). Run from the project
-folder that holds `plate.png`.
+to paint white), `OFFSET` (seconds the recording runs ahead of the camera, default 0), `SHIFTS` / `REGIONS` (the per-piece files,
+default `shifts.json` / `regions.json`: a revision that drops or adds a piece renumbers the pieces, so give it its own
+files). Run from the project folder that holds `plate.png`.

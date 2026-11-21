@@ -12,8 +12,9 @@ import sys, os, json, subprocess, numpy as np, cv2
 from canvas import Canvas, FW, FH
 k = sys.argv[1]; E = json.load(open(f"{k}/edl.json")); SP = E.get("speed", 1); R = 30 / SP; N = 5
 OFFSET = float(os.environ.get("OFFSET", 0))
-SH = {int(a): b for a, b in json.load(open("shifts.json")).items()} if os.path.exists("shifts.json") else {}
-RG = {int(a): b for a, b in json.load(open("regions.json")).items()} if os.path.exists("regions.json") else {}
+SHF, RGF = os.environ.get("SHIFTS", "shifts.json"), os.environ.get("REGIONS", "regions.json")   # per-cut files: piece numbers change when a revision drops or adds a piece
+SH = {int(a): b for a, b in json.load(open(SHF)).items()} if os.path.exists(SHF) else {}
+RG = {int(a): b for a, b in json.load(open(RGF)).items()} if os.path.exists(RGF) else {}
 need = []                                                    # (first source frame at R fps, frames) per piece
 for i, g in enumerate(E["segments"]): need.append((round((g["src_start"] + OFFSET + SH.get(i, 0)) * R), round((g["out_end"] - g["out_start"]) * 30)))
 for i in range(1, len(need)):                                # pieces must not run backwards for a single pass
