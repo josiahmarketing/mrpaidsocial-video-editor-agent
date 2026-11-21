@@ -949,6 +949,9 @@ The owner filmed the same set-up as an earlier split-screen video: a diagram pre
 - A word anchor matched an earlier "test" and the typed call-to-action fired 24 s early in the first build. Gotcha #110.
 - The first render was read frame by frame (twelve frames per transition, five a second elsewhere) and redone: flask bubbles rose across the lettering above the flask, cut-off words showed as slivers along the top of the lower panel, and the two fork labels were 26 px tall in the only view that fitted both. The second pass keeps the bubbles inside the flask, fades the panel's top edge under the caption, frames the circled option alone at reading size, and ends on the comment card with both answers enlarged side by side and the whole page small underneath. Gotchas #111, #112.
 - The drawing app's corner button lands on a different part of the page once the speaker has zoomed, so the patch made for the unzoomed plate missed it; the last rows of the canvas are clipped instead.
+- The opening card carries the brief's visual headline in the brand's type; the drawing's own shorter title returns with the whole page at the end.
+- On the finished render the end recap showed two specks at the page's corners: the lower edge of an app button that had survived in the plate's top rows (the shade lift had darkened it) and a stray dot from the recording. They were painted out in the master encode and covered in the build for later renders; the plate step in the README now says to check the border rows.
+- Checks on the finished file: decodes clean, -13.9 LUFS, voice within 2 ms of the picture on all 20 pieces, safe-zone check clean, music bed 17 dB under the voice, every transition read frame by frame.
 - 35 one-use sounds levelled by energy, one new music track, 44 moves with no move type repeated (the build throws on a repeat).
 
 Tools changed: `tools/screencanvas/mkcanvas.py` (`OFFSET`, `regions.json`), its README. Gotchas #106-#112 added.

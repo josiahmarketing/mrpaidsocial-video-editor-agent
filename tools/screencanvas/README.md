@@ -17,7 +17,10 @@ edit then does its own focus moves with one set of coordinates for the whole vid
 ## Workflow
 
 1. **Plate.** Find a stretch where the whole drawing is on screen with no toolbar (often the first seconds, before markup
-   mode). Take the median of a few frames and crop to the paper: `plate.png`.
+   mode). Take the median of a few frames and crop to the paper: `plate.png`. Then look at its outer 20 rows and columns
+   for anything dark: the lower edge of an app button or a scroll indicator survives the crop, and lifting the shade under
+   the top bar makes it darker. It is invisible while the edit is zoomed in and shows as a speck the moment the whole
+   page comes on screen. Paint it out of the plate before rendering the canvas.
 2. **Check the audio.** A tablet screen recording is often SILENT; the voice is on the camera file. Probe it before
    planning the cut.
 3. **Line up with the camera.** Two recordings started "together" by hand are easily a second apart. If the speaker made a
