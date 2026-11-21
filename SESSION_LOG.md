@@ -921,3 +921,18 @@ The owner filmed a ranking video without saying the options: he pauses, then ans
 
 Skills and tools touched: `tools/uttercut/cut.py`, `branded-ad-edit/references/gotchas.md` (#96-#100).
 
+
+## 2026-11-21 — A comment-reply short from a voice-only take: screenshot, stock footage and a "print shop" look
+
+The owner sent a "B-roll voiceover": a camera file with a black picture and his voice, plus his own screenshot of the comments he is answering. He asked for motion graphics, transitions, subtitles, sounds "not too loud", music, real images from the internet where needed, safe zones and 1.1x.
+
+- The file was probed before planning: sound, no picture. It was cut on the voice (16 pieces, 43.6 s, two retakes dropped) and every scene was built. Gotcha #102.
+- The comment on screen is his screenshot, cropped per comment. Word boxes were located in the image so the rings and the enlarged phrases sit on the commenter's exact words; the enlargements are crops of the same image, not retyped text. The closing uses the real comment field from the screenshot with the reply typed into it.
+- Stock sites were not reachable from the machine. The owner approved two media file hosts on the environment; clip ids came from a search tool (results too large to read inline, so a helper returned a short list) and files were downloaded by pattern and probed. Three video clips and three stills, all free-licence. Gotcha #103.
+- Fourth graphics look, so the videos do not repeat: sticker headlines, perforated coupons that get crossed out, a door hanger that fills in line by line, rubber stamps. Blanks in the script stay blank on screen; the mock coupon and the caller quotes are named as illustrations in the delivery.
+- A coupon element shared its id with a generated caption chunk and the caption tilted with it. Gotcha #101.
+- Hanger pins placed on a drone clip sat still while the street moved under them; they now travel with the footage. Gotcha #104.
+- The verdict stamp at the end of the hook was up for a frame before the scene changed; the transition moved into the next sentence. Gotcha #105.
+- Seven scene transitions, each a different move with its own sound; 25 one-use sounds levelled by energy; one new music track.
+
+Skills touched: `branded-ad-edit/references/gotchas.md` (#101-#105).
