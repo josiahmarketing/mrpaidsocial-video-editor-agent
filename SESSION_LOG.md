@@ -936,3 +936,17 @@ The owner sent a "B-roll voiceover": a camera file with a black picture and his 
 - Seven scene transitions, each a different move with its own sound; 25 one-use sounds levelled by energy; one new music track.
 
 Skills touched: `branded-ad-edit/references/gotchas.md` (#101-#105).
+
+## 2026-11-21 — Split-screen short: a prepared tablet drawing revealed in step with the script
+
+The owner filmed the same set-up as an earlier split-screen video: a diagram prepared on the tablet, circles and underlines added live, the camera on him. He asked for "the same format" with good transitions, music and sound, 1.1x, the camera mirrored, everything in the safe zones, accurate cuts with whole sentences, and for it not to look as if he were reading.
+
+- Twenty pieces from 55 utterances (the last complete read of each line), 50.3 s. In the kept reads he looks at the camera or down at the drawing; the glances at his script fall between takes and went with the pauses.
+- He had made a sync mark (tablet held up to the camera, a scribble). It put the screen recording 0.92 s ahead of the camera, although both file names carry the same second. Gotcha #106. `mkcanvas.py` now takes `OFFSET`.
+- The drawing is revealed as he reaches each part: faint ghosts of what is still to come, the new ad sliding into the winner's group, the group flashing red, a RESET stamp, the copy sliding out of the first group. His own strokes stay. Method in `tools/screencanvas/README.md`; gotcha #107. One of his circles crossed a curtain edge, so that curtain is a soft veil; a stroke his own zoom cut in half is replaced by the plate for those pieces (`regions.json`, new).
+- "Facebook says so itself" is shown, not said: a real screenshot of the platform's help page with the line in its list of significant edits highlighted. Both of the script's claims were checked against the page text. First capture attempts were unusable (phone width too small, title under a sticky header). Gotcha #109.
+- The first version of the "about 50 a week" meter and the split-or-together graphic sat at the drawing's scale and were tiny, with half the frame empty; they now live in screen coordinates over the safe band, on the brand's grid paper beyond the page's edge. Gotcha #108.
+- A word anchor matched an earlier "test" and the typed call-to-action fired 24 s early in the first build. Gotcha #110.
+- 34 one-use sounds levelled by energy, one new music track, 18 camera moves and 23 element moves with no move type repeated (the build throws on a repeat).
+
+Tools changed: `tools/screencanvas/mkcanvas.py` (`OFFSET`, `regions.json`), its README. Gotchas #106-#110 added.
