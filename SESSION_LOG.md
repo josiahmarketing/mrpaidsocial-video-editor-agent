@@ -947,6 +947,8 @@ The owner filmed the same set-up as an earlier split-screen video: a diagram pre
 - "Facebook says so itself" is shown, not said: a real screenshot of the platform's help page with the line in its list of significant edits highlighted. Both of the script's claims were checked against the page text. First capture attempts were unusable (phone width too small, title under a sticky header). Gotcha #109.
 - The first version of the "about 50 a week" meter and the split-or-together graphic sat at the drawing's scale and were tiny, with half the frame empty; they now live in screen coordinates over the safe band, on the brand's grid paper beyond the page's edge. Gotcha #108.
 - A word anchor matched an earlier "test" and the typed call-to-action fired 24 s early in the first build. Gotcha #110.
-- 34 one-use sounds levelled by energy, one new music track, 18 camera moves and 23 element moves with no move type repeated (the build throws on a repeat).
+- The first render was read frame by frame (twelve frames per transition, five a second elsewhere) and redone: flask bubbles rose across the lettering above the flask, cut-off words showed as slivers along the top of the lower panel, and the two fork labels were 26 px tall in the only view that fitted both. The second pass keeps the bubbles inside the flask, fades the panel's top edge under the caption, frames the circled option alone at reading size, and ends on the comment card with both answers enlarged side by side and the whole page small underneath. Gotchas #111, #112.
+- The drawing app's corner button lands on a different part of the page once the speaker has zoomed, so the patch made for the unzoomed plate missed it; the last rows of the canvas are clipped instead.
+- 35 one-use sounds levelled by energy, one new music track, 44 moves with no move type repeated (the build throws on a repeat).
 
-Tools changed: `tools/screencanvas/mkcanvas.py` (`OFFSET`, `regions.json`), its README. Gotchas #106-#110 added.
+Tools changed: `tools/screencanvas/mkcanvas.py` (`OFFSET`, `regions.json`), its README. Gotchas #106-#112 added.

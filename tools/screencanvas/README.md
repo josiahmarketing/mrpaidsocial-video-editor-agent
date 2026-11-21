@@ -54,6 +54,15 @@ is steady in plate coordinates, the edit can hold parts back and bring them in w
 - **Know where the live strokes are.** Before placing a curtain, difference the canvas against the plate at the end of
   every piece and list the stroke boxes. A curtain edge across a live stroke cuts it with a straight line; use a
   soft-edged veil there, or reveal that part earlier.
+- **Views are sized to the lettering.** Lettering height times view scale should come to 35 px or more on a 1080-wide
+  frame. A view scaled to fit two far-apart labels makes both unreadable: frame the one being talked about, leave the
+  other as a ghost, and when both are needed at once lift them out of the plate and set them side by side in screen
+  coordinates, with the whole page small underneath.
+- **Fade the panel's top edge.** Every view cuts something at the top of the panel, and it shows as slivers beside the
+  caption bar. One white band across the top (opaque to the caption's lower edge, fading over the next 25 px) hides them;
+  place each view so its subject starts below the band.
+- **App buttons move with the speaker's zoom.** A corner button patched out of the unzoomed plate sits on a different part
+  of the page once the speaker has zoomed in. Check the canvas at each zoom state and clip or patch again.
 - **Full-size graphics go in the window, not on the page.** In a split screen the safe band under the camera is about
   400 px tall. A meter or a document screenshot drawn at the page's scale comes out a third of the size it needs:
   place those in screen coordinates over the band, and dim the page behind them with a white veil.
