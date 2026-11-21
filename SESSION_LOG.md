@@ -955,3 +955,15 @@ The owner filmed the same set-up as an earlier split-screen video: a diagram pre
 - 35 one-use sounds levelled by energy, one new music track, 44 moves with no move type repeated (the build throws on a repeat).
 
 Tools changed: `tools/screencanvas/mkcanvas.py` (`OFFSET`, `regions.json`), its README. Gotchas #106-#112 added.
+
+## 2026-11-21 — Revision: one ad-lib sentence removed from the split-screen short
+
+The owner's only note on the first cut was to remove the ad-lib sentence the delivery had flagged.
+
+- The cut was made again from the plan without that utterance, not by splicing the finished clips: the three-frame face dissolve and the five-frame drawing dissolve at the next join had been made against the removed piece's last frame, so a splice would have left a ghost of it. The other 19 pieces came out with the same source ranges; everything after the join moved up 32 frames.
+- Side files keyed by piece number (stroke shifts, clean regions) had to be renumbered for the new cut. `mkcanvas.py` now reads them from `SHIFTS` / `REGIONS`, so a revision keeps its own files and the first cut stays reproducible.
+- The beat that had been built on the removed sentence (a camera pull, a ripple, one sound) went with it. The build refused to compile until the word anchor for that sentence was removed, which is the behaviour wanted: an anchor that silently matched a later word would have fired a graphic in the wrong place.
+- The revision was built as its own part beside the first (own cut list, clips and build script); the first version's files were not touched.
+- Checks on the finished file: decodes clean, -14.0 LUFS, voice within 2 ms of the picture on all 19 pieces, safe-zone check clean, the join read frame by frame, and a transcript of the finished file's audio confirms the sentence is gone.
+
+Tools changed: `tools/screencanvas/mkcanvas.py` (`SHIFTS`, `REGIONS`), its README.
