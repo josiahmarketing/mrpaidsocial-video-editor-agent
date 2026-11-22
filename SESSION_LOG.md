@@ -985,3 +985,17 @@ The owner filmed a follow-up to an earlier short in one take: three lines to cam
 - 35 one-use sounds levelled by energy, one new music track; 27 moves with no move type repeated.
 
 Tools changed: `tools/safezone/check.mjs` (stepped zone, `--bands`). Gotchas #114-#116 added, #65 corrected. `ARCHITECTURE.md` line updated.
+
+## 2026-11-22 — Revision: the real message screenshots in place of the retyped bubbles
+
+The owner answered the first cut with two screenshots of the message thread and one line: put the actual screenshot in. The first delivery had said the bubbles were retyped because no screenshots had been supplied.
+
+- The cut, timing, sounds and music did not change. The revision is its own part beside the first, sharing the media by hard link; the first version's files were not touched.
+- Each message is its own card cut from the screenshot (bubbles found by their fill colour), not the whole phone screen. Four are used: the text the hook quotes, the booking text, the profit text with his own heart reaction on it, and the text about the other quote.
+- Names: the brief asked for the customer's name to be blurred. It is smeared in the card's pixels with a feathered mosaic and blur, and the smeared box was tested for surviving letters. The sender line and the group header carry the client's name and business; they are smeared or left out by default, and one message with a swear word is not used. The delivery names all three choices so the owner can reverse them.
+- A card cannot grow past the safe width, and two side by side above his head made the figure too small to read. The booking text now has the band to itself at full width while he says the figure, then shrinks aside for the profit text. 
+- "In red" and "in green" from the brief are frames around the real cards plus underlines that land under the real words as he says them; the word positions were measured from the image.
+- The retyped bubbles and the figure tiles they stood in for are gone, so nothing on screen says the same thing twice in two different wordings.
+- The renderer's lint flagged a CSS transform that a tween also drives; it worked, but the start value now comes from a `gsap.set` so the lint is clean.
+
+Gotcha #117 added.
