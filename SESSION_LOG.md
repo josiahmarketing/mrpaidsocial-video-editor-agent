@@ -997,5 +997,7 @@ The owner answered the first cut with two screenshots of the message thread and 
 - "In red" and "in green" from the brief are frames around the real cards plus underlines that land under the real words as he says them; the word positions were measured from the image.
 - The retyped bubbles and the figure tiles they stood in for are gone, so nothing on screen says the same thing twice in two different wordings.
 - The renderer's lint flagged a CSS transform that a tween also drives; it worked, but the start value now comes from a `gsap.set` so the lint is clean.
+- Reading the thread-opening wipe at the render rate showed it growing from the left for two frames before it was even. The first cut had the same fault, unseen on half-second sheets. The browser shortens a four-value `inset()` whose sides repeat, and a `to` tween then pairs the numbers with the wrong sides. Every clip-path wipe now names both shapes in full. Gotcha #118.
+- The hook's message card no longer blinks out when the thread opens: the thread's own copy of the card starts on the same pixels and glides down as the window grows around it.
 
-Gotcha #117 added.
+Gotchas #117 and #118 added.
