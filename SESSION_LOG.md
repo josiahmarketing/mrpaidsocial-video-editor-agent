@@ -967,3 +967,21 @@ The owner's only note on the first cut was to remove the ad-lib sentence the del
 - Checks on the finished file: decodes clean, -14.0 LUFS, voice within 2 ms of the picture on all 19 pieces, safe-zone check clean, the join read frame by frame, and a transcript of the finished file's audio confirms the sentence is gone.
 
 Tools changed: `tools/screencanvas/mkcanvas.py` (`SHIFTS`, `REGIONS`), its README.
+
+## 2026-11-22 — Story-update short: camera for the lines to camera, a message thread for the voice-over; the safe zone redrawn for three platforms
+
+The owner filmed a follow-up to an earlier short in one take: three lines to camera and two stretches he marked in the take itself as voice-over ("this is just going to be a voiceover... motion graphics"). He asked for graphics, transitions, music and subtitles, a zoom-in at the start, 1.1x, the camera mirrored, and everything inside "the safe zones of TikTok, Instagram, and YouTube Shorts".
+
+- Ten pieces from 29 utterances (the last complete read of each line), 38.6 s. His spoken directions to the editor and the retakes went; nothing from the script did.
+- The camera lines were cut on their own with short handles, face-locked and background-blurred, then laid onto the full timeline. Under the voice-over graphics the picture holds the nearest clean frame, so a transition that opens a few frames early never shows black. The last frame is held once: on the one after it his eyelids start to drop.
+- The print on his T-shirt sits low in the frame, where his hands also pass. The lower frame is blurred progressively instead of tracking the print.
+- Sixth graphics look, so the videos do not repeat: a message thread. Bubbles, an ad card with a switch, a lead tracker, a price that stays covered, and the captions sitting in the thread's message field over a blank keyboard. The client's messages were not supplied as screenshots, so the bubbles are retyped from the brief and from what he says, and the delivery says so.
+- The first snapshot showed every later scene stacked on the first: the scene elements had no hidden state in CSS (gotcha #2 again). One class for "starts hidden" fixed it.
+- A count-up on the job price put "$552" on a paused frame beside a caption reading "$785". Figures that are claims now land whole, and a figure spoken after its label waits behind blank blocks. Gotcha #115.
+- Safe zone. The layout passed the house box, then the renderer's own check flagged it for two of the three platforms. The published zones were looked up: they are tighter than the box and one of them is not a rectangle. The area inside all three is stepped (y 288-840: x 120-888; y 840-1248: x 120-780). The layout was rebuilt to it: cards 696 px wide above y 840, captions at most 480 px wide with lines of about 16 characters. `tools/safezone/check.mjs` now tests the stepped zone by default. Gotcha #114; #65 corrected. Earlier deliveries used the wider box and the owner was told.
+- A red bubble with a fixed width let one line run past its edge while the zone check stayed green. Gotcha #116.
+- Lip sync was measured, not eyeballed: mouth opening against the voice, on the finished camera sections and on the untouched take. Both gave the same lag, and the frames matched the take at the mapped source times.
+- Checks on the finished file: decodes clean, loudness on target, voice on the picture to 0 ms on all 10 pieces, a transcript of the finished mix made without the script in the prompt has all 184 words, every transition read frame by frame, caption bars measured (widest 479 px).
+- 35 one-use sounds levelled by energy, one new music track; 27 moves with no move type repeated.
+
+Tools changed: `tools/safezone/check.mjs` (stepped zone, `--bands`). Gotchas #114-#116 added, #65 corrected. `ARCHITECTURE.md` line updated.

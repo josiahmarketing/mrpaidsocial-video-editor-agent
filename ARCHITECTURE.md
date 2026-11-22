@@ -52,7 +52,7 @@ tools/uttercut/            # utterance-level base cut for script-read takes: spl
 tools/avsync/              # lipsync.py: mouth opening vs the file's own voice, to compare an edit with the camera original
 tools/screencanvas/        # a drawing-app screen recording fitted to a clean plate: steady, toolbar-free canvas for split-screen edits
 tools/remix/               # rebuild a composition's audio mix from its <audio> tags (audio-only revisions without a video re-render)
-tools/safezone/            # check that a composition's text and cards stay inside the platform safe box at every moment
+tools/safezone/            # check that a composition's text and cards stay inside the platform safe zone at every moment (default: the stepped area inside TikTok's, Meta's and YouTube's published zones)
 tools/printblur/           # blur only a printed graphic on clothing through a cut, keeping hands in front of it sharp (track.py + blur.py)
 tools/smoothcut/           # make a jump-cut talking head read as one take: face-lock each segment, optical-flow in-betweens at every cut, soft edge fill
 scripts/
