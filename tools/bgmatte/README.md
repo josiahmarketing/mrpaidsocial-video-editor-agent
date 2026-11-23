@@ -31,8 +31,36 @@ The model file is gitignored (it is a binary download, not a source file).
   - Transform both videos with the same tween.
   - Never wrap them in a transformed or faded container. That isolates the group and the blend sees no
     backdrop.
-  - Env: `OUTLINE` px (default 12, 0 = none), `SHADOW` 0..1, `EVERY` (matte every Nth frame).
+  - Env: `OUTLINE` px (default 12, 0 = none), `SHADOW` 0..1, `EVERY` (matte every Nth frame),
+    `MATTE="WxH"` (matte size in multiples of 32; 512x896 is cleaner around hair at about half the speed).
   - Render with JPEG frame extraction. Two full-frame videos as PNG frames fill a small disk.
+  - **The multiply layer must decode as exact white outside the sticker.** If it is 2 % short, the whole
+    video box dims the backdrop and shows as a rectangle as soon as the layer is moved (a drop, a slide).
+    Every 8-bit RGB to YUV round trip loses 1-2 % of white, so `cutout.py` stores the matte's top end
+    above nominal white. After any later re-encode of the matte (joining sections, trimming), lift it again:
+    `ffmpeg -i mk.mp4 -vf "lutyuv=y='if(gt(val,212),min(212+(val-212)*1.9,252),val)'" -c:v libx264 -crf 12 out.mp4`.
+    Prove it in the composition, not in the file: shift the layer, snapshot, and compare the backdrop's
+    colour inside and outside the video's box. They must be equal.
+
+  When the matte alone is not enough (it keeps furniture, or loses pale clothes), `cutout.py` takes a second
+  opinion. Add only what the footage needs, and look at a strip of consecutive frames after each one:
+  - `SEG=<selfie_multiclass.tflite>` (MediaPipe class segmenter: hair, skin, clothes, accessories). The matte
+    is kept only near those classes (`SEG_PAD` px of slack), and clothes or skin the matte lost are filled
+    back in below `BODY_FROM` (px row). `SEG_CROP="y0,y1"` runs it on those rows only. The accessories class
+    is part of the gate on purpose: without it a clip-on microphone is cut out of the chest.
+  - `NECK=<px row>`: above it only hair and skin count. A dark chair back is "clothing" to the segmenter.
+  - `COOL="thr[,to_row[,dark]]"` with `COOL_SKIP="x0,y0,x1,y1"`: a dark chair back or headrest behind dark
+    hair. Neither model separates them, so pieces of the chair come and go from frame to frame. Colour does:
+    dark hair is warm (red above blue), black plastic and mesh are neutral to blue. Print the local
+    red-minus-blue of a hair patch and of a chair patch first, and put the threshold between them. The skip
+    box exempts a black top under the chin, which is dark and cool as well.
+  - `HEAD="cx,cy,rx,ry"` or `KEEP=<mask.png>` (from `hairmask.py`): for a face-locked speaker, an arch or a
+    picture of where the head may be. Good for chair wings beside the hair; it cannot remove what sits
+    inside the hair's usual outline.
+  - `SOLID=<gamma>`: fast hands are half transparent over a wide blur and the white sticker paper shows
+    through them; 0.55 keeps them flesh-coloured.
+- `hairmask.py in.mp4 out.png`: for a face-locked speaker, the share of frames in which the segmenter calls
+  each pixel hair or face, thresholded (`FREQ`) and widened (`PAD`) into a mask for `KEEP`.
 
 All three write video only (all-intra x264); mux the cleaned audio from the source/mezzanine afterwards.
 Verify on a frame crop of the hair edge, not on a full-frame thumbnail.

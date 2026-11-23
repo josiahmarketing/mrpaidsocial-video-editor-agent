@@ -9,7 +9,8 @@
 # cover are mirrored and then blurred (SOFT px sigma, 0 = off), because a sharp mirror of a sleeve or a chair back reads
 # as a kaleidoscope pattern at the frame edge. Env: MODEL (face_landmarker.task), SCALE (output px per source px at the median face size,
 # default 0.853), EYE_X / EYE_Y preferred eye position (540 / 720; each segment gets as near as its framing allows),
-# HPAD / VPAD px of mirrored edge allowed at the sides / bottom to hold that position (0), MORPH (3),
+# HPAD / VPAD px of mirrored edge allowed at the sides / bottom to hold that position (0), TPAD the same at the top
+# (0; a speaker placed smaller or lower than the source frames, e.g. for a cut-out, needs all three), MORPH (3),
 # CUTS="f1,f2" extra cut frames, QA=dir (a strip of frames around every cut + meta.json).
 # OUT="1920x1080" sets the output size (default 1080x1920); AW is the width the face is tracked at (540; use 960 for landscape).
 # SMIN=<scale> is the smallest zoom a segment may get (default none): with takes where the speaker sits at two distances,
@@ -57,9 +58,9 @@ for a, b in zip(edges[:-1], edges[1:]):
 Dref = float(np.median(dist)); med = np.array([np.median(mid[a:b], axis=0) for a, b in zip(edges[:-1], edges[1:])]); s = np.array([S0 * Dref / np.median(dist[a:b]) for a, b in zip(edges[:-1], edges[1:])])
 s = np.maximum(s, float(os.environ.get("SMIN", 0)))   # SMIN=1.0: a segment where the speaker leans in keeps its larger face instead of shrinking past the frame edge
 EX = float(os.environ.get("EYE_X", OW / 2)); MG = float(os.environ.get("MARGIN", 45)); Tk = np.zeros((K, 2))
-HP = float(os.environ.get("HPAD", 0)); VP = float(os.environ.get("VPAD", 0))     # px of mirrored edge allowed at the sides / at the bottom
+HP = float(os.environ.get("HPAD", 0)); VP = float(os.environ.get("VPAD", 0)); TP = float(os.environ.get("TPAD", 0))     # px of mirrored edge allowed at the sides / at the bottom / at the top
 for k in range(K):
-    lox, hix = OW - s[k] * (W - med[k, 0]) + MG - HP, s[k] * med[k, 0] - MG + HP; loy, hiy = OH - s[k] * (H - med[k, 1]) + MG - VP, s[k] * med[k, 1] - MG
+    lox, hix = OW - s[k] * (W - med[k, 0]) + MG - HP, s[k] * med[k, 0] - MG + HP; loy, hiy = OH - s[k] * (H - med[k, 1]) + MG - VP, s[k] * med[k, 1] - MG + TP
     Tk[k] = [np.clip(EX, lox, hix) if lox <= hix else (lox + hix) / 2, np.clip(EY, loy, hiy) if loy <= hiy else (loy + hiy) / 2]
 # ---------- boundary corrections: scale first, then position
 rs = np.ones(K); re_ = np.ones(K); ds = np.zeros((K, 2)); de = np.zeros((K, 2))

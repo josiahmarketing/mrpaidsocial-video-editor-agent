@@ -47,12 +47,12 @@ tools/editor/              # Python stdlib project state, stage resume and foota
   project.py              #   hashed receipts, stale-state detection, locks, immutable render versions
   catalog.py              #   probe, thumbnails, sidecar/local transcription and content IDs
   tests/                  #   state, failure, cache, media and review-import regressions
-tools/bgmatte/             # CPU background blur / background swap for talking heads (MODNet ONNX; model gitignored)
+tools/bgmatte/             # CPU background blur / background swap / sticker cut-out for talking heads (MODNet ONNX, optional class segmenter; models gitignored)
 tools/uttercut/            # utterance-level base cut for script-read takes: split at pauses, keep clean reads, verify edges
 tools/avsync/              # lipsync.py: mouth opening vs the file's own voice, to compare an edit with the camera original
 tools/screencanvas/        # a drawing-app screen recording fitted to a clean plate: steady, toolbar-free canvas for split-screen edits
 tools/remix/               # rebuild a composition's audio mix from its <audio> tags (audio-only revisions without a video re-render)
-tools/safezone/            # check that a composition's text and cards stay inside the platform safe zone at every moment (default: the stepped area inside TikTok's, Meta's and YouTube's published zones)
+tools/safezone/            # check that a composition's text and cards stay inside the platform safe zone at every moment (default: the stepped area inside TikTok's, Meta's and YouTube's published zones; rectangles are cut to their clipping ancestors, `--boxes` names extra card classes); `pops.mjs` finds elements shown before their entrance (on screen, gone for a frame, then animating in)
 tools/printblur/           # blur only a printed graphic on clothing through a cut, keeping hands in front of it sharp (track.py + blur.py)
 tools/smoothcut/           # make a jump-cut talking head read as one take: face-lock each segment, optical-flow in-betweens at every cut, soft edge fill
 scripts/

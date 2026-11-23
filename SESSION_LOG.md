@@ -1001,3 +1001,21 @@ The owner answered the first cut with two screenshots of the message thread and 
 - The hook's message card no longer blinks out when the thread opens: the thread's own copy of the card starts on the same pixels and glides down as the window grows around it.
 
 Gotchas #117 and #118 added.
+
+## 2026-11-23 — Short: "Why your best ad dies" (cut-out speaker over a screen, made-up example ad)
+
+The brief asked for a green-screen format over a made-up example ad, three formats popping up as he names them, a red cross on a recoloured copy, everything in the safe zone, and no graphic or sound used twice.
+
+- 22 pieces from 36 utterances. Five lines are read off camera (gaze data and frame strips agree, and he says so in the take); they became full-screen graphics. His spoken directions to the editor and the retakes went. 60.0 s at 1.1x.
+- Seventh look, so the videos do not repeat: the speaker as a sticker cut-out in front of a white screen. One scene per line sits in the strip above his head, and the whole screen is used in the voice-over stretches. The cut-out is two plain videos composited with blend modes. A desk hides the print on his T-shirt, which sits low in the frame.
+- The cut-out took the longest: a black mesh chair behind dark curly hair. Neither the matting model nor a class segmenter separates them, and a shape limit cannot remove what lies inside the hair's own outline. Colour does (hair is warm, the chair is not). The clip-on microphone had to be added to the foreground classes or it was cut out of his chest. Gotchas #120, #121.
+- The camera sections were cut a second time for picture only, with frame-exact handles, so he can drop behind the desk, rise, and slide out and in. Gotcha #122. In the first render he rose and slid in with his eyes closed: he blinks before each line. The moves were retimed around the blinks. Gotcha #128.
+- A faint rectangle moved with the cut-out. The multiply layer's white was 2 to 4 % short of white after two encodes, so the whole video box dimmed the backdrop. Fixed in the file and in `cutout.py`; the proof is the backdrop measuring the same inside and outside the box. Gotcha #119.
+- Reading the first render frame by frame showed chart bars at full height before each one grew, and cards flashing in place before their entrance. A new checker, `tools/safezone/pops.mjs`, steps the timeline and lists every such element; it found eight. Gotcha #126. A wipe needed an opaque page to cover the old scene (#127).
+- The transcript of the finished mix, made without the script in the prompt, was one word short: "and to do next". The "what" after a removed "uh" was fused to the filler and the aligner had it 0.13 s late, so the cut took the word; the cut's own transcript, prompted with the script, had written it in anyway. The real boundary came from 5 ms band energies, three cut points were tested with the unprompted model, and the cut, the camera section and the render were redone. Gotcha #129.
+- Safe-zone tool: rectangles are now cut to their clipping ancestors, and a composition can name its own box classes. With the caption bars measured as boxes, their border was 2 px over the bottom line while the words were inside. Gotcha #123.
+- Every made-up asset carries its own EXAMPLE tag (#125). A status card that arrived before its line showed the changed state half a second early (#124).
+- Cost rule missed once: the first 36 sounds were generated before the cost was stated. It was stated before the rest, and the real spend was read from the balance afterwards.
+- Checks on the finished file are in the delivery note for this edit (decode, loudness, voice on the picture for all 22 pieces, an unprompted transcript of the mix, every transition read frame by frame, caption bars measured, nothing shown before its entrance).
+
+Tools changed: `tools/bgmatte/cutout.py` (matte size, segmenter gate, colour rule, solid hands, white lift), new `tools/bgmatte/hairmask.py`, `tools/smoothcut/smooth.py` (`TPAD`), `tools/safezone/check.mjs` (clipping, `--boxes`), new `tools/safezone/pops.mjs`. Gotchas #119-#129 added. `ARCHITECTURE.md` and `tools/bgmatte/README.md` updated.
