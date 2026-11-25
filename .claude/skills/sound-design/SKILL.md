@@ -163,6 +163,18 @@ Order of operations matters — every ratio below assumes step 1 happened first.
    0.15; offer 0.18 as the "louder" option. In a word gap the bed should raise the
    gap's mean level by a few dB versus a no-music render — present, not competing.
 
+   **The right gap depends on what the bed plays, not just its loudness.** One
+   reviewer asked for MORE music at 21–23 dB under the voice on sparse pads, then
+   said "music's way too loud, I can't even hear my own voice" at 17 dB under on a
+   busy loop (piano, brushed drums) under a fast voice-over, with a sound on every
+   beat. Integrated loudness hides this: an instrument busy in the voice band
+   (300 Hz–3 kHz: piano, guitar, horns, hand percussion) masks words at a level
+   where a pad does not. Pick a sparse bed for a dense voice-over, or sit a busy
+   one ~25–27 dB under the voice. To check a finished mix, solve the voice track's
+   gain in the master (least squares after aligning to the sample) and measure
+   what is left: that residual is the music and effects as the listener hears
+   them, which a "speech windows vs gaps" level comparison does not separate.
+
 3. **SFX: per-hit base volume × one kit master gain, capped.** Keep per-hit taste
    values in the ~0.28–0.5 range by type, then scale the whole kit with a single
    master gain (**~1.95** proved right for a −3dB-normalized kit against a loudnorm'd
