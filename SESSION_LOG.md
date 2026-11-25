@@ -1040,4 +1040,11 @@ voice-over take.
   child at its CSS state until its own stagger slot): hidden with a load-time `gsap.set`. Its one remaining hit is an
   intended flip-out.
 
-No tracked tool changes this stretch.
+- His notes on the short: "music's way too loud, I can't even hear my own voice", sound effects lower, 1.0x because he
+  read it fast; everything else approved. Measured v1: music plus effects sat 15.7 dB under the voice (solved by fitting
+  the voice track's gain in the master). The bed was a busy jazz loop in the voice's range, so integrated level misled.
+  v2 re-cut at 1.0x from the source with word times carried through the take, music about 27 dB under, sounds 8 dB
+  lower: background now 23.7 dB under the voice in the finished file.
+- The 1.1x Before our call bed was 15 s shorter than the video, so v3 ended without music; v4 crossfades a second pass.
+
+Skill touched: sound-design (bed level depends on what the bed plays; measuring the finished mix).
