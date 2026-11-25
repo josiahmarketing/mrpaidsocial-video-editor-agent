@@ -1019,3 +1019,25 @@ The brief asked for a green-screen format over a made-up example ad, three forma
 - Checks on the finished file are in the delivery note for this edit (decode, loudness, voice on the picture for all 22 pieces, an unprompted transcript of the mix, every transition read frame by frame, caption bars measured, nothing shown before its entrance).
 
 Tools changed: `tools/bgmatte/cutout.py` (matte size, segmenter gate, colour rule, solid hands, white lift), new `tools/bgmatte/hairmask.py`, `tools/smoothcut/smooth.py` (`TPAD`), `tools/safezone/check.mjs` (clipping, `--boxes`), new `tools/safezone/pops.mjs`. Gotchas #119-#129 added. `ARCHITECTURE.md` and `tools/bgmatte/README.md` updated.
+
+## 2026-11-24/25 — /thank-you re-shoots, a "cut" left in, and "When to kill an ad" (voice-over, eighth look)
+
+Three landscape /thank-you videos re-shot without the price-drop lines, then a motion-graphics-only short over a
+voice-over take.
+
+- The first Drive upload of the re-shoots had silent audio; caught on probe and he re-sent them.
+- The prompted transcript of one take dropped whole words ("Ballpark is fine"); merged with an unprompted pass and
+  checked against the script by hand before captions were written.
+- His note on the first round: a spoken "cut" (his restart marker) survived at one join, because the next piece's
+  quiet-before reached back into the marker; and one video ran a few frames into a look away after the last line.
+  Both fixed as new files. The tool for the first already exists (`tools/uttercut/joinchk.py`, gotcha #82) and was
+  not run on that video: run it on every cut, and read the last ten frames face-close before calling an ending done.
+- Higgsfield credits ran out (2.42 left) after the thank-you sounds and music (26.2 credits; cost stated only
+  afterwards, a rule miss). The short used the Epidemic Sound library through Higgsfield instead (no credits); the
+  download host was added to the environment.
+- Short: eighth look (a ledger page), 22 sounds each used once, captions capped at 480 px, safe zone 0 outside.
+  `pops.mjs` found seven elements on screen before a staggered or delayed entrance (`immediateRender: false` leaves a
+  child at its CSS state until its own stagger slot): hidden with a load-time `gsap.set`. Its one remaining hit is an
+  intended flip-out.
+
+No tracked tool changes this stretch.
