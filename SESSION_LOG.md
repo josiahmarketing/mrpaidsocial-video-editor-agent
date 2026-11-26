@@ -1048,3 +1048,14 @@ voice-over take.
 - The 1.1x Before our call bed was 15 s shorter than the video, so v3 ended without music; v4 crossfades a second pass.
 
 Skill touched: sound-design (bed level depends on what the bed plays; measuring the finished mix).
+
+## 2026-11-26 — "When to kill an ad" v3: cleaner voice, better pace (free route)
+
+- He asked to redo the voice as a clone of his own, "much cleaner, better pace". Higgsfield refused the clone at 2.42
+  credits (fee above that, not quotable; nothing charged). Reading with a reference instead (seed_audio) quoted 9.5.
+- Free route he chose: his read had only 0.1-0.2 s between sentences and room tone ~31 dB under speech between words.
+  New `tools/uttercut/vopolish.py` inserts silence at the quietest point of each boundary, leaves run-ons alone, shifts
+  the word times, then denoises with the read's own noise profile, EQ, de-ess, compresses, and gates. First chain put
+  the gate before the compressor and the room tone came out LOUDER relative to speech (26 dB): order matters.
+- Checks: unprompted medium transcript matches (only number formatting differs), word timing within 4 ms, render plays
+  through, voice 2 ms from the picture, background 24.6 dB under the voice, frames read beat by beat.
