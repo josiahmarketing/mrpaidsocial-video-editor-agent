@@ -1074,3 +1074,8 @@ Skill touched: sound-design (bed level depends on what the bed plays; measuring 
   projects' intermediates; space came from this batch's own finished files.
 - Caption truth: unprompted multi-model transcripts of single lines settled "a logo", "a couple questions", "they're
   sending me"; FILTER re-rendered before delivery (253/253 words in the final).
+- Kill-an-ad to camera delivered. Near miss: my batch render script named every non-FILTER part after the ladder video
+  and would have overwritten that delivered master; stopped before the master step. The script now maps each part to its
+  own name and refuses to overwrite an existing master.
+- Mix check by RMS misreads a bass-only bed (it read 14 dB under the voice); measured in LUFS on the separated stems the
+  three mixes sit 17-19 LU under. Judge the bed with loudness units, not raw RMS.
