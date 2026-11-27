@@ -174,6 +174,9 @@ Order of operations matters — every ratio below assumes step 1 happened first.
    gain in the master (least squares after aligning to the sample) and measure
    what is left: that residual is the music and effects as the listener hears
    them, which a "speech windows vs gaps" level comparison does not separate.
+   Compare the two in LUFS (write both to wav, run ebur128), not raw RMS: a
+   bass-only bed read 14 dB under the voice by RMS and 17 LU under by loudness,
+   which matches how it sounds.
 
 3. **SFX: per-hit base volume × one kit master gain, capped.** Keep per-hit taste
    values in the ~0.28–0.5 range by type, then scale the whole kit with a single
