@@ -1059,3 +1059,18 @@ Skill touched: sound-design (bed level depends on what the bed plays; measuring 
   the gate before the compressor and the room tone came out LOUDER relative to speech (26 dB): order matters.
 - Checks: unprompted medium transcript matches (only number formatting differs), word timing within 4 ms, render plays
   through, voice 2 ms from the picture, background 24.6 dB under the voice, frames read beat by beat.
+
+## 2026-11-27 — Drive batch: FILTER, LADDER, kill-an-ad to camera (three new looks)
+
+- Three DJI desk takes (2-3 GB each). The disk could not hold them, so each was streamed from Drive straight into a
+  30 fps working copy and deleted once its cut existed (originals stay in Drive).
+- Blueprint (FILTER), night thread (LADDER, him over the client's blurred thread via `bgswap.py`, real texts as cards
+  with names smeared in the pixels) and thermal receipt (kill-an-ad) looks; each video its own Epidemic sound set.
+- Broke one: `blurbg.py` defaulted to 1920x1080 with no decoder scaling, so a 9:16 face cam came out as scrambled
+  landscape frames while the run "succeeded", and my script had already deleted its inputs. Fixed the tool (input size
+  by default) and the script (delete intermediates only after the next file probes as 1080x1920).
+- Face lock: at SCALE 0.853 the eyes could not rise above y ~980 and captions sat on the mouth; SCALE 1.02, EYE_Y 800.
+- Renderer refuses below 1 GB free; render temp needs ~400 MB. The auto-mode check (rightly) blocked deleting other
+  projects' intermediates; space came from this batch's own finished files.
+- Caption truth: unprompted multi-model transcripts of single lines settled "a logo", "a couple questions", "they're
+  sending me"; FILTER re-rendered before delivery (253/253 words in the final).
