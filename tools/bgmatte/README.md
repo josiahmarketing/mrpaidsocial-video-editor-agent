@@ -10,8 +10,11 @@ scripts (or point `MODNET=/path/model.onnx` at it):
 
 The model file is gitignored (it is a binary download, not a source file).
 
-- `blurbg.py in.mov out.mp4 [ss dur]` — landscape 1920x1080 @30: keeps the speaker sharp, blurs the room
-  (downscaled Gaussian plate). Matte at 640x352 (env MW/MH), computed every 2nd frame. ~4 fps on 4 cores
+- `blurbg.py in.mov out.mp4 [ss dur]` — @30, at the input's own size unless `SIZE=WxH` is set (it then scales):
+  keeps the speaker sharp, blurs the room (downscaled Gaussian plate). Matte 640x352 for landscape, 352x640 for
+  portrait (env MW/MH), computed every 2nd frame. (It used to default to 1920x1080 without scaling, so a 9:16 input
+  came out as scrambled landscape frames while the run reported success: probe the output's size before deleting
+  the input.) ~4 fps on 4 cores
   alone, ~1–3 fps while other CPU work runs: budget it like a render and run it in the background.
 - `bgswap.py in.mov out.mp4 bg.png` — vertical 1080x1920 @30 "green screen": the speaker over a heavily
   blurred, darkened, slowly drifting version of `bg.png` (e.g. a text thread, so names stay unreadable).
